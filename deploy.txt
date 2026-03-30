@@ -1,0 +1,7 @@
+Once the wait is up, do this in order:
+
+1. Redeploy on Vercel (so the updated GOOGLE_REDIRECT_URI env var takes effect on the serverless functions)
+2. Go to https://nico-planner.vercel.app/dashboard/settings
+3. Click "Connect Google Calendar"
+4. Complete the Google consent flow
+5. You should land back on settings with a "connected" status

@@ -14,6 +14,7 @@ export async function GET(req: NextRequest) {
     dest.searchParams.set('google', status)
     const res = NextResponse.redirect(dest)
     res.cookies.delete('google_oauth_state')
+    res.cookies.delete('google_code_verifier')
     return res
   }
 
@@ -29,11 +30,15 @@ export async function GET(req: NextRequest) {
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return NextResponse.redirect(new URL('/login', req.url))
 
+  // Read and validate PKCE verifier
+  const codeVerifier = cookieStore.get('google_code_verifier')?.value
+  if (!codeVerifier) return redirect('error')
+
   // Exchange authorization code for tokens
   const oauth2Client = getOAuth2Client()
   let refreshToken: string
   try {
-    const { tokens } = await oauth2Client.getToken(code)
+    const { tokens } = await oauth2Client.getToken({ code, codeVerifier })
     if (!tokens.refresh_token) return redirect('error')
     refreshToken = tokens.refresh_token
   } catch {

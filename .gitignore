@@ -61,3 +61,5 @@ vendor/
 coverage/
 .cache/
 tmp/
+
+.vercel

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { getOAuth2Client } from '@/lib/google/calendar'
+import crypto from 'crypto'
 
 // GET — initiate OAuth flow
 export async function GET() {
@@ -13,21 +14,33 @@ export async function GET() {
   const oauth2Client = getOAuth2Client()
   const state = crypto.randomUUID()
 
+  // PKCE
+  const codeVerifier = crypto.randomBytes(32).toString('base64url')
+  const codeChallenge = crypto
+    .createHash('sha256')
+    .update(codeVerifier)
+    .digest('base64url')
+
   const authUrl = oauth2Client.generateAuthUrl({
     access_type: 'offline',
     scope: ['https://www.googleapis.com/auth/calendar.events'],
     prompt: 'consent',   // always request refresh_token
     state,
+    code_challenge: codeChallenge,
+    code_challenge_method: 'S256',
   })
 
-  const response = NextResponse.redirect(authUrl)
-  response.cookies.set('google_oauth_state', state, {
+  const cookieOptions = {
     httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: 'lax',
+    secure: true,
+    sameSite: 'lax' as const,
     maxAge: 600,
     path: '/',
-  })
+  }
+
+  const response = NextResponse.redirect(authUrl)
+  response.cookies.set('google_oauth_state', state, cookieOptions)
+  response.cookies.set('google_code_verifier', codeVerifier, cookieOptions)
   return response
 }
 
