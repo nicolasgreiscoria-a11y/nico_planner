@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { getOAuth2Client } from '@/lib/google/calendar'
+import { CodeChallengeMethod } from 'google-auth-library'
 import crypto from 'crypto'
 
 // GET — initiate OAuth flow
@@ -27,7 +28,7 @@ export async function GET() {
     prompt: 'consent',   // always request refresh_token
     state,
     code_challenge: codeChallenge,
-    code_challenge_method: 'S256',
+    code_challenge_method: CodeChallengeMethod.S256,
   })
 
   const cookieOptions = {
