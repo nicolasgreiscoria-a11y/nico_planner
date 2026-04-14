@@ -5,6 +5,7 @@ import { addDays, format } from 'date-fns'
 import { useWeek } from '@/lib/context/WeekContext'
 import { useSchedule, ScheduleEntry } from '@/lib/hooks/useSchedule'
 import { useCategories, Category } from '@/lib/hooks/useCategories'
+import { useProfile } from '@/lib/hooks/useProfile'
 import { SlotEditor } from './SlotEditor'
 
 // ─── Constants ───────────────────────────────────────────────────────────────
@@ -12,7 +13,6 @@ import { SlotEditor } from './SlotEditor'
 const SLOT_HEIGHT = 28        // px per 30-min slot
 const TIME_COL_W = 56         // px
 const DAY_COL_MIN_W = 120     // px
-const DAY_START = '05:00'
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 
@@ -217,8 +217,10 @@ export function WeekGrid() {
   const { weekStart } = useWeek()
   const { entries, loading, add, update, remove } = useSchedule(weekStart)
   const { categories } = useCategories()
+  const { profile } = useProfile()
   const [editorState, setEditorState] = useState<EditorState>(null)
 
+  const DAY_START = profile?.day_start_time ?? '05:00'
   const slots = generateSlots(DAY_START)
   const dayStartMinutes = timeToMinutes(DAY_START)
 
