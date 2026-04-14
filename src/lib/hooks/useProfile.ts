@@ -36,7 +36,9 @@ export function useProfile() {
     if (!profile) return
     setSaving(true)
     setProfile(prev => prev ? { ...prev, ...changes } : prev)
-    await supabase.from('profiles').update(changes).eq('id', profile.id)
+    await supabase.from('profiles').upsert({ id: profile.id, ...changes })
+    const { error } = await supabase.from('profiles').upsert({ id: profile.id, ...changes })
+    if (error) console.error('Save failed:', error)
     setSaving(false)
   }, [supabase, profile])
 
