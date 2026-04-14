@@ -36,13 +36,22 @@ export function useProfile() {
     console.log('save called, profile:', profile)
     if (!profile) return
     setSaving(true)
-    setProfile(prev => prev ? { ...prev, ...changes } : prev)
     const { error } = await supabase
       .from('profiles')
       .update(changes)
       .eq('id', profile.id)
-    if (error) console.error('Save failed:', error)
-    else console.log('Saved successfully')
+    if (error) {
+      console.error('Save failed:', error)
+    } else {
+      console.log('Saved successfully')
+      // Refetch fresh data from DB
+      const { data } = await supabase
+        .from('profiles')
+        .select('*')
+        .eq('id', profile.id)
+        .single()
+      if (data) setProfile(data)
+    }
     setSaving(false)
   }, [supabase, profile])
 
