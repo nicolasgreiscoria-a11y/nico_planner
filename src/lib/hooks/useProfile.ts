@@ -26,7 +26,10 @@ export function useProfile() {
         .select('*')
         .eq('id', user.id)
         .single()
-      if (data) setProfile(data)
+      if (data) {
+        data.day_start_time = data.day_start_time?.slice(0, 5) ?? '05:00'
+        setProfile(data)
+      }
       setLoading(false)
     }
     load()
@@ -50,7 +53,10 @@ export function useProfile() {
         .select('*')
         .eq('id', profile.id)
         .single()
-      if (data) setProfile(data)
+      if (data) {
+        data.day_start_time = data.day_start_time?.slice(0, 5) ?? '05:00'
+        setProfile(data)
+      }
     }
     setSaving(false)
   }, [supabase, profile])
