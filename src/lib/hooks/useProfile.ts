@@ -33,6 +33,7 @@ export function useProfile() {
   }, [supabase])
 
   const save = useCallback(async (changes: Partial<Omit<Profile, 'id'>>) => {
+    console.log('save called, profile:', profile)
     if (!profile) return
     setSaving(true)
     setProfile(prev => prev ? { ...prev, ...changes } : prev)
