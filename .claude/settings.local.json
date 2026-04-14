@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__claude_ai_Supabase__list_tables",
+      "mcp__claude_ai_Supabase__execute_sql",
+      "mcp__claude_ai_Vercel__get_project",
+      "mcp__claude_ai_Vercel__get_runtime_logs",
+      "mcp__claude_ai_Vercel__list_deployments",
+      "Bash(npx vercel:*)",
+      "Bash(printf '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')",
+      "mcp__claude_ai_Vercel__deploy_to_vercel",
+      "Bash(node -e \"const {google} = require\\(''''googleapis''''\\); const t = google.auth.OAuth2; console.log\\(Object.keys\\(require\\(''''googleapis/build/src/auth/oauth2client''''\\)\\)\\)\")"
+    ]
+  }
+}
