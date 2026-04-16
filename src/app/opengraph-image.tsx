@@ -76,7 +76,7 @@ export default function OGImage() {
               background: 'rgba(87,187,138,0.1)',
               border: '1px solid rgba(87,187,138,0.28)',
               marginBottom: 28,
-              width: 'fit-content',
+              alignSelf: 'flex-start',
             }}
           >
             <div style={{ width: 7, height: 7, borderRadius: '50%', background: '#57bb8A', display: 'flex' }} />
