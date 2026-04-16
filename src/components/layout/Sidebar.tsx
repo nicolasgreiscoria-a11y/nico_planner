@@ -65,13 +65,27 @@ function NavItem({ href, label, icon }: { href: string; label: string; icon: Rea
   return (
     <Link
       href={href}
-      className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors"
+      className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-150 cursor-pointer"
       style={{
-        color: isActive ? '#57bb8A' : '#888888',
-        background: isActive ? '#57bb8A15' : 'transparent',
+        color: isActive ? '#57bb8A' : 'var(--muted)',
+        background: isActive ? 'rgba(87,187,138,0.1)' : 'transparent',
+        border: isActive ? '1px solid rgba(87,187,138,0.2)' : '1px solid transparent',
+        boxShadow: isActive ? '0 0 12px rgba(87,187,138,0.08)' : 'none',
+      }}
+      onMouseEnter={e => {
+        if (!isActive) {
+          (e.currentTarget as HTMLElement).style.background = 'var(--glass-surface)'
+          ;(e.currentTarget as HTMLElement).style.color = 'var(--text)'
+        }
+      }}
+      onMouseLeave={e => {
+        if (!isActive) {
+          (e.currentTarget as HTMLElement).style.background = 'transparent'
+          ;(e.currentTarget as HTMLElement).style.color = 'var(--muted)'
+        }
       }}
     >
-      <span style={{ color: isActive ? '#57bb8A' : '#888888' }}>{icon}</span>
+      <span style={{ color: isActive ? '#57bb8A' : 'inherit' }}>{icon}</span>
       {label}
     </Link>
   )
@@ -82,10 +96,16 @@ export function Sidebar() {
 
   return (
     <>
-      {/* Mobile hamburger button */}
+      {/* Mobile hamburger */}
       <button
-        className="md:hidden fixed top-4 left-4 z-50 p-2 rounded-lg"
-        style={{ background: '#1A1A1A', border: '1px solid #2A2A2A', color: '#E8E8E8' }}
+        className="md:hidden fixed top-4 left-4 z-50 p-2 rounded-xl cursor-pointer transition-all duration-150"
+        style={{
+          background: 'var(--glass-strong)',
+          border: '1px solid var(--glass-border)',
+          color: 'var(--text)',
+          backdropFilter: 'blur(12px)',
+          WebkitBackdropFilter: 'blur(12px)',
+        }}
         onClick={() => setMobileOpen(prev => !prev)}
         aria-label="Toggle menu"
       >
@@ -105,6 +125,7 @@ export function Sidebar() {
         <div
           className="md:hidden fixed inset-0 z-40 bg-black/60"
           onClick={() => setMobileOpen(false)}
+          style={{ backdropFilter: 'blur(4px)', WebkitBackdropFilter: 'blur(4px)' }}
         />
       )}
 
@@ -118,17 +139,29 @@ export function Sidebar() {
         `}
         style={{
           width: 220,
-          background: '#111111',
-          borderRight: '1px solid #2A2A2A',
+          background: 'rgba(255,255,255,0.03)',
+          backdropFilter: 'blur(20px)',
+          WebkitBackdropFilter: 'blur(20px)',
+          borderRight: '1px solid var(--glass-border)',
+          boxShadow: 'inset -1px 0 0 rgba(255,255,255,0.04)',
         }}
       >
         {/* Logo */}
-        <div className="px-5 py-5" style={{ borderBottom: '1px solid #2A2A2A' }}>
+        <div
+          className="px-5 py-5"
+          style={{ borderBottom: '1px solid var(--glass-border)' }}
+        >
           <span
-            className="text-lg font-bold"
-            style={{ color: '#57bb8A', fontFamily: 'DM Sans, sans-serif' }}
+            className="text-lg font-bold tracking-tight"
+            style={{
+              fontFamily: 'DM Sans, sans-serif',
+              background: 'linear-gradient(135deg, #57bb8A 0%, #4A90D9 100%)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text',
+            }}
           >
-            Nico Planner
+            HabitCircuit
           </span>
         </div>
 
@@ -138,6 +171,12 @@ export function Sidebar() {
             <NavItem key={item.href} {...item} />
           ))}
         </nav>
+
+        {/* Bottom glow accent */}
+        <div
+          className="mx-4 mb-4 h-px"
+          style={{ background: 'linear-gradient(90deg, transparent, rgba(87,187,138,0.3), transparent)' }}
+        />
       </aside>
     </>
   )

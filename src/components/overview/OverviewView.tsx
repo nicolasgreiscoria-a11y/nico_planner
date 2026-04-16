@@ -19,12 +19,9 @@ const PRIORITY_COLOR: Record<Priority, string> = {
 
 function Card({ title, children, className }: { title: string; children: React.ReactNode; className?: string }) {
   return (
-    <div
-      className={`rounded-xl flex flex-col ${className ?? ''}`}
-      style={{ background: '#1A1A1A', border: '1px solid #2A2A2A' }}
-    >
-      <div className="px-4 py-3 shrink-0" style={{ borderBottom: '1px solid #2A2A2A' }}>
-        <h2 className="text-sm font-semibold" style={{ color: '#E8E8E8', fontFamily: 'DM Sans, sans-serif' }}>
+    <div className={`glass-card flex flex-col ${className ?? ''}`}>
+      <div className="px-4 py-3 shrink-0" style={{ borderBottom: '1px solid var(--glass-border)' }}>
+        <h2 className="text-sm font-semibold" style={{ color: 'var(--text)', fontFamily: 'DM Sans, sans-serif' }}>
           {title}
         </h2>
       </div>

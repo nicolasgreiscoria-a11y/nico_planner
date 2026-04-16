@@ -77,7 +77,7 @@ function AddHabitForm({ onAdd }: { onAdd: (name: string) => void }) {
   }
 
   return (
-    <div className="flex items-center gap-2 px-4 py-3" style={{ borderTop: '1px solid #2A2A2A' }}>
+    <div className="flex items-center gap-2 px-4 py-3" style={{ borderTop: '1px solid var(--glass-border)' }}>
       <input
         type="text"
         value={value}
@@ -109,18 +109,18 @@ export function HabitTable() {
 
   if (loading) {
     return (
-      <div className="rounded-xl p-6" style={{ background: '#1A1A1A', border: '1px solid #2A2A2A' }}>
-        <p className="text-sm" style={{ color: '#888888' }}>Loading habits...</p>
+      <div className="glass-card p-6">
+        <p className="text-sm" style={{ color: 'var(--muted)' }}>Loading habits...</p>
       </div>
     )
   }
 
   return (
-    <div className="rounded-xl overflow-hidden" style={{ background: '#1A1A1A', border: '1px solid #2A2A2A' }}>
+    <div className="glass-card overflow-hidden" style={{ borderRadius: 16 }}>
       <div className="overflow-x-auto">
         <table className="w-full" style={{ minWidth: 560 }}>
           <thead>
-            <tr style={{ borderBottom: '1px solid #2A2A2A' }}>
+            <tr style={{ borderBottom: '1px solid var(--glass-border)' }}>
               <th
                 className="text-left px-4 py-3 text-xs font-medium uppercase tracking-wide"
                 style={{ color: '#888888', width: '40%' }}
@@ -168,8 +168,13 @@ export function HabitTable() {
             {habits.map((habit, hi) => (
               <tr
                 key={habit.id}
-                className="group transition-colors hover:bg-[#1E1E1E]"
-                style={{ borderTop: hi > 0 ? '1px solid #222222' : undefined }}
+                className="group transition-colors"
+                style={{
+                  borderTop: hi > 0 ? '1px solid var(--glass-border)' : undefined,
+                  transition: 'background 150ms ease',
+                }}
+                onMouseEnter={e => (e.currentTarget as HTMLElement).style.background = 'var(--glass-surface)'}
+                onMouseLeave={e => (e.currentTarget as HTMLElement).style.background = 'transparent'}
               >
                 <td className="px-4 py-2">
                   <div className="flex items-center gap-2">

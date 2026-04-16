@@ -32,8 +32,10 @@ function DayPanel({
     <div
       className="flex-1 rounded-lg overflow-hidden transition-all"
       style={{
-        background: '#1A1A1A',
-        border: `1px solid ${open ? '#333333' : '#222222'}`,
+        background: 'var(--glass-surface)',
+        backdropFilter: 'blur(12px)',
+        WebkitBackdropFilter: 'blur(12px)',
+        border: `1px solid ${open ? 'var(--glass-border-strong)' : 'var(--glass-border)'}`,
         minWidth: 120,
       }}
     >

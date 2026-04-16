@@ -79,8 +79,14 @@ export function TaskForm({ initial, onSave, onClose }: TaskFormProps) {
       <div className="fixed inset-0 z-40 bg-black/50" onClick={onClose} />
       <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
         <div
-          className="w-full max-w-lg rounded-xl p-6 space-y-4"
-          style={{ background: '#1A1A1A', border: '1px solid #2A2A2A' }}
+          className="w-full max-w-lg rounded-2xl p-6 space-y-4"
+          style={{
+            background: 'rgba(15,15,18,0.85)',
+            backdropFilter: 'blur(20px)',
+            WebkitBackdropFilter: 'blur(20px)',
+            border: '1px solid var(--glass-border-strong)',
+            boxShadow: '0 16px 48px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.08)',
+          }}
           onClick={e => e.stopPropagation()}
         >
           {/* Header */}

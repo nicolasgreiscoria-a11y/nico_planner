@@ -133,9 +133,11 @@ function DayColumn({
       <div
         className="text-center py-2.5 shrink-0"
         style={{
-          background: '#111111',
-          borderBottom: '1px solid #2A2A2A',
-          borderLeft: '1px solid #2A2A2A',
+          background: 'rgba(255,255,255,0.03)',
+          backdropFilter: 'blur(12px)',
+          WebkitBackdropFilter: 'blur(12px)',
+          borderBottom: '1px solid var(--glass-border)',
+          borderLeft: '1px solid var(--glass-border)',
         }}
       >
         <div
@@ -278,18 +280,18 @@ export function WeekGrid() {
     : ''
 
   return (
-    <div className="flex flex-col h-full rounded-xl overflow-hidden" style={{ border: '1px solid #2A2A2A' }}>
+    <div className="flex flex-col h-full rounded-xl overflow-hidden" style={{ border: '1px solid var(--glass-border)' }}>
       {/* Scroll container */}
-      <div className="flex overflow-auto flex-1" style={{ background: '#0F0F0F' }}>
+      <div className="flex overflow-auto flex-1" style={{ background: 'var(--bg)' }}>
         {/* Time column */}
         <div
           className="shrink-0 sticky left-0 z-10"
-          style={{ width: TIME_COL_W, background: '#111111', borderRight: '1px solid #2A2A2A' }}
+          style={{ width: TIME_COL_W, background: 'rgba(255,255,255,0.03)', backdropFilter: 'blur(12px)', borderRight: '1px solid var(--glass-border)' }}
         >
           {/* Spacer matching day header height */}
           <div
             className="shrink-0"
-            style={{ height: 56, borderBottom: '1px solid #2A2A2A', background: '#111111' }}
+            style={{ height: 56, borderBottom: '1px solid var(--glass-border)', background: 'transparent' }}
           />
           {/* Time labels */}
           {slots.map((slot, si) => (

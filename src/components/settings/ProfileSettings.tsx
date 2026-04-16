@@ -39,14 +39,15 @@ function Field({ label, children }: { label: string; children: React.ReactNode }
 }
 
 const inputStyle = {
-  background: '#1A1A1A',
-  border: '1px solid #2A2A2A',
-  color: '#E8E8E8',
+  background: 'rgba(0,0,0,0.25)',
+  border: '1px solid var(--glass-border)',
+  color: 'var(--text)',
   borderRadius: 8,
   padding: '8px 12px',
   fontSize: 14,
   outline: 'none',
   width: '100%',
+  backdropFilter: 'blur(4px)',
 }
 
 export function ProfileSettings() {

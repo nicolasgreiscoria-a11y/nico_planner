@@ -8,7 +8,7 @@ export function Skeleton({
   return (
     <div
       className={`rounded-lg animate-pulse ${className ?? ''}`}
-      style={{ background: '#222222', ...style }}
+      style={{ background: 'rgba(255,255,255,0.06)', ...style }}
     />
   )
 }
@@ -17,7 +17,7 @@ export function SkeletonCard({ rows = 3 }: { rows?: number }) {
   return (
     <div
       className="rounded-xl p-5 space-y-3"
-      style={{ background: '#1A1A1A', border: '1px solid #2A2A2A' }}
+      style={{ background: 'var(--glass-surface)', border: '1px solid var(--glass-border)', backdropFilter: 'blur(12px)' }}
     >
       <Skeleton style={{ height: 16, width: '40%' }} />
       {Array.from({ length: rows }, (_, i) => (

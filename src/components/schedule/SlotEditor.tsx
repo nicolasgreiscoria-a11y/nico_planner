@@ -113,8 +113,14 @@ export function SlotEditor({
         onClick={e => e.stopPropagation()}
       >
         <div
-          className="w-full max-w-sm rounded-xl p-5 space-y-4"
-          style={{ background: '#1A1A1A', border: '1px solid #2A2A2A' }}
+          className="w-full max-w-sm rounded-2xl p-5 space-y-4"
+          style={{
+            background: 'rgba(15,15,18,0.88)',
+            backdropFilter: 'blur(20px)',
+            WebkitBackdropFilter: 'blur(20px)',
+            border: '1px solid var(--glass-border-strong)',
+            boxShadow: '0 16px 48px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.08)',
+          }}
         >
           {/* Header */}
           <div className="flex items-center justify-between">

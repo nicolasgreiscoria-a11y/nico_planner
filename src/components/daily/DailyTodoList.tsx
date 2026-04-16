@@ -31,7 +31,7 @@ function PriorityDot({ priority, onChange }: { priority: Priority; onChange: (p:
           <div className="fixed inset-0 z-10" onClick={() => setOpen(false)} />
           <div
             className="absolute left-0 top-5 z-20 rounded-lg py-1 shadow-xl"
-            style={{ background: '#1A1A1A', border: '1px solid #2A2A2A', minWidth: 90 }}
+            style={{ background: 'rgba(15,15,18,0.9)', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)', border: '1px solid var(--glass-border-strong)', minWidth: 90, boxShadow: '0 8px 24px rgba(0,0,0,0.4)' }}
           >
             {PRIORITY_OPTIONS.map(p => (
               <button

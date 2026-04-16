@@ -1,0 +1,19 @@
+User-agent: *
+Allow: /login
+Disallow: /dashboard
+Disallow: /api/
+
+# AI training crawlers — block to keep personal data private
+User-agent: GPTBot
+Disallow: /
+
+User-agent: Google-Extended
+Disallow: /
+
+User-agent: Bytespider
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+Sitemap: https://habitcircuit.vercel.app/sitemap.xml

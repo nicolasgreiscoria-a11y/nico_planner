@@ -191,7 +191,7 @@ export function TaskTable() {
       {/* Top bar */}
       <div className="flex items-center justify-between">
         {/* Filter tabs */}
-        <div className="flex items-center gap-1" style={{ background: '#1A1A1A', border: '1px solid #2A2A2A', borderRadius: 10, padding: 3 }}>
+        <div className="flex items-center gap-1" style={{ background: 'rgba(0,0,0,0.3)', border: '1px solid var(--glass-border)', borderRadius: 10, padding: 3, backdropFilter: 'blur(8px)' }}>
           {FILTERS.map(f => (
             <button
               key={f.key}
@@ -229,7 +229,7 @@ export function TaskTable() {
       </div>
 
       {/* Table */}
-      <div className="rounded-xl overflow-hidden" style={{ background: '#1A1A1A', border: '1px solid #2A2A2A' }}>
+      <div className="glass-card overflow-hidden" style={{ borderRadius: 16 }}>
         {loading ? (
           <div className="p-6 text-center text-sm" style={{ color: '#888888' }}>Loading tasks...</div>
         ) : (

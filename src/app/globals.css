@@ -2,19 +2,32 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ─── Design Tokens ──────────────────────────────────────────────────────── */
 :root {
-  --bg: #0F0F0F;
-  --card: #1A1A1A;
-  --border: #2A2A2A;
+  /* Surfaces */
+  --bg: #0a0a0c;
   --accent: #57bb8A;
-  --text: #E8E8E8;
-  --muted: #888888;
+  --accent-glow: rgba(87, 187, 138, 0.15);
+  --text: #EDEDEF;
+  --muted: #8A8F98;
+
+  /* Glass surfaces */
+  --glass-surface: rgba(255, 255, 255, 0.04);
+  --glass-strong:  rgba(255, 255, 255, 0.07);
+  --glass-border:  rgba(255, 255, 255, 0.08);
+  --glass-border-strong: rgba(255, 255, 255, 0.14);
+
+  /* Legacy compat */
+  --card: rgba(255, 255, 255, 0.04);
+  --border: rgba(255, 255, 255, 0.08);
 }
 
+/* ─── Base ───────────────────────────────────────────────────────────────── */
 body {
-  background-color: #0F0F0F;
-  color: #E8E8E8;
+  background-color: var(--bg);
+  color: var(--text);
   font-family: 'IBM Plex Sans', sans-serif;
+  -webkit-font-smoothing: antialiased;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -22,12 +35,96 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 @layer utilities {
-  .text-balance {
-    text-wrap: balance;
+  .text-balance { text-wrap: balance; }
+}
+
+/* ─── Glass Utilities ────────────────────────────────────────────────────── */
+@layer components {
+  /* Standard frosted glass card */
+  .glass-card {
+    background: var(--glass-surface);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.06);
   }
+
+  /* Stronger glass for primary surfaces (sidebar, header) */
+  .glass-panel {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-color: var(--glass-border);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
+  }
+
+  /* Accent glow highlight (active nav, CTA) */
+  .glass-accent {
+    background: rgba(87, 187, 138, 0.1);
+    border: 1px solid rgba(87, 187, 138, 0.2);
+    box-shadow: 0 0 16px rgba(87, 187, 138, 0.08);
+  }
+
+  /* Subtle glass for table rows / list items */
+  .glass-row {
+    background: transparent;
+    border-bottom: 1px solid var(--glass-border);
+    transition: background 150ms ease;
+  }
+  .glass-row:hover {
+    background: var(--glass-surface);
+  }
+
+  /* Input inside glass surfaces */
+  .glass-input {
+    background: rgba(0, 0, 0, 0.25);
+    border: 1px solid var(--glass-border);
+    color: var(--text);
+    border-radius: 8px;
+    transition: border-color 150ms ease, box-shadow 150ms ease;
+  }
+  .glass-input:focus {
+    outline: none;
+    border-color: rgba(87, 187, 138, 0.4);
+    box-shadow: 0 0 0 3px rgba(87, 187, 138, 0.1);
+  }
+}
+
+/* ─── Gradient Blobs (background atmosphere) ─────────────────────────────── */
+.blob {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(80px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ─── Animations ─────────────────────────────────────────────────────────── */
+@keyframes blob-drift {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33%       { transform: translate(30px, -20px) scale(1.05); }
+  66%       { transform: translate(-20px, 15px) scale(0.96); }
+}
+
+@keyframes blob-drift-alt {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  40%       { transform: translate(-25px, 20px) scale(1.04); }
+  70%       { transform: translate(20px, -15px) scale(0.97); }
 }
 
 @keyframes slideInRight {
   from { opacity: 0; transform: translateX(16px); }
   to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Respect user motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .blob { animation: none !important; }
+  * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
 }

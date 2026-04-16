@@ -18,7 +18,7 @@ function WeeklyTaskItem({
   onRemove: () => void
 }) {
   return (
-    <li className="flex items-center gap-3 py-2 px-3 rounded-lg group hover:bg-[#1E1E1E] transition-colors">
+    <li className="flex items-center gap-3 py-2 px-3 rounded-xl group transition-colors" style={{ transition: 'background 150ms ease' }} onMouseEnter={e => (e.currentTarget as HTMLElement).style.background = 'var(--glass-surface)'} onMouseLeave={e => (e.currentTarget as HTMLElement).style.background = 'transparent'}>
       <button
         onClick={onToggle}
         className="w-5 h-5 rounded flex items-center justify-center shrink-0 transition-all duration-150"
@@ -76,7 +76,7 @@ function AddTaskInput({ onAdd }: { onAdd: (title: string) => void }) {
   }
 
   return (
-    <div className="flex items-center gap-2 px-3 pt-2 mt-1" style={{ borderTop: '1px solid #222222' }}>
+    <div className="flex items-center gap-2 px-3 pt-2 mt-1" style={{ borderTop: '1px solid var(--glass-border)' }}>
       <input
         type="text"
         value={value}
@@ -104,16 +104,16 @@ export function WeeklyTaskList() {
 
   if (loading) {
     return (
-      <div className="rounded-xl p-4" style={{ background: '#1A1A1A', border: '1px solid #2A2A2A' }}>
-        <p className="text-sm" style={{ color: '#888888' }}>Loading...</p>
+      <div className="glass-card p-4">
+        <p className="text-sm" style={{ color: 'var(--muted)' }}>Loading...</p>
       </div>
     )
   }
 
   return (
-    <div className="rounded-xl" style={{ background: '#1A1A1A', border: '1px solid #2A2A2A' }}>
+    <div className="glass-card">
       {/* Header */}
-      <div className="flex items-center justify-between px-4 py-3" style={{ borderBottom: '1px solid #2A2A2A' }}>
+      <div className="flex items-center justify-between px-4 py-3" style={{ borderBottom: '1px solid var(--glass-border)' }}>
         <h2
           className="text-sm font-semibold"
           style={{ color: '#E8E8E8', fontFamily: 'DM Sans, sans-serif' }}

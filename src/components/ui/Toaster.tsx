@@ -50,7 +50,9 @@ export function Toaster() {
             key={toast.id}
             className="flex items-center gap-2.5 px-4 py-3 rounded-xl shadow-xl pointer-events-auto"
             style={{
-              background: '#1A1A1A',
+              background: 'rgba(15,15,18,0.85)',
+              backdropFilter: 'blur(16px)',
+              WebkitBackdropFilter: 'blur(16px)',
               border: `1px solid ${s.border}`,
               minWidth: 220,
               maxWidth: 360,
