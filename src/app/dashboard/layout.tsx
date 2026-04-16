@@ -3,15 +3,14 @@ import { redirect } from 'next/navigation'
 import { DashboardShell } from '@/components/layout/DashboardShell'
 
 const DEFAULT_CATEGORIES = [
-  { name: 'Class',                    color: '#57bb8A' },
-  { name: 'Tennis',                   color: '#4A90D9' },
-  { name: 'Gym',                      color: '#E67C73' },
-  { name: 'Trivia',                   color: '#F6BF26' },
-  { name: 'Homework Help',            color: '#8E24AA' },
-  { name: 'Meals',                    color: '#FF8A65' },
-  { name: 'Grad School Application',  color: '#26A69A' },
-  { name: 'Sauna',                    color: '#78909C' },
-  { name: 'Practice',                 color: '#5C6BC0' },
+  { name: 'Work',      color: '#4A90D9' },
+  { name: 'Study',     color: '#57bb8A' },
+  { name: 'Exercise',  color: '#E67C73' },
+  { name: 'Meals',     color: '#FF8A65' },
+  { name: 'Social',    color: '#F6BF26' },
+  { name: 'Personal',  color: '#8E24AA' },
+  { name: 'Rest',      color: '#78909C' },
+  { name: 'Other',     color: '#5C6BC0' },
 ]
 
 export default async function DashboardLayout({
