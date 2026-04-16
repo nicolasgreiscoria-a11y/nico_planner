@@ -274,6 +274,30 @@ function FeatureCard({ icon, title, desc, color }: Feature) {
   )
 }
 
+// ─── Schema.org structured data ──────────────────────────────────────────────
+
+const schemaOrg = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: 'HabitCircuit',
+  applicationCategory: 'LifestyleApplication',
+  operatingSystem: 'Web',
+  url: 'https://nico-planner.vercel.app',
+  description:
+    'HabitCircuit is a weekly planner, habit tracker, and task manager built for students who want to follow through on their goals.',
+  offers: {
+    '@type': 'Offer',
+    price: '0',
+    priceCurrency: 'USD',
+  },
+  featureList: [
+    'Weekly schedule with 30-minute time blocks',
+    'Daily habit tracker with completion rates',
+    'Task manager with Google Calendar sync',
+    'Daily to-do lists and notes',
+  ],
+}
+
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
 export default async function LandingPage() {
@@ -331,6 +355,11 @@ export default async function LandingPage() {
   ]
 
   return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaOrg) }}
+      />
     <div style={{ background: 'var(--bg)', minHeight: '100vh', position: 'relative', overflowX: 'hidden' }}>
 
       {/* ── Ambient blobs ── */}
@@ -619,5 +648,6 @@ export default async function LandingPage() {
         </p>
       </footer>
     </div>
+    </>
   )
 }

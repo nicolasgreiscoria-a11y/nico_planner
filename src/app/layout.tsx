@@ -4,12 +4,18 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "HabitCircuit",
   description: "Your weekly planner and habit tracker",
-  metadataBase: new URL("https://habitcircuit.vercel.app"),
+  metadataBase: new URL("https://nico-planner.vercel.app"),
   openGraph: {
-    title: "HabitCircuit",
-    description: "Your weekly planner and habit tracker",
+    title: "HabitCircuit — Weekly Planner & Habit Tracker",
+    description: "Stop drifting. Start doing. One system for your schedule, habits, tasks, and daily notes.",
     type: "website",
-    url: "https://habitcircuit.vercel.app",
+    url: "https://nico-planner.vercel.app",
+    siteName: "HabitCircuit",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "HabitCircuit — Weekly Planner & Habit Tracker",
+    description: "Stop drifting. Start doing. One system for your schedule, habits, tasks, and daily notes.",
   },
   robots: {
     index: true,
