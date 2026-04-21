@@ -11,6 +11,8 @@ interface SlotEditorProps {
   initialEndTime: string
   dayLabel: string
   categories: Category[]
+  calendarConnected?: boolean
+  isSynced?: boolean
   onSave: (data: {
     title: string | null
     categoryId: string | null
@@ -18,6 +20,7 @@ interface SlotEditorProps {
     endTime: string
     isRecurring: boolean
   }) => void
+  onSyncToCalendar?: () => Promise<void>
   onDelete?: () => void
   onClose: () => void
 }
@@ -44,7 +47,10 @@ export function SlotEditor({
   initialEndTime,
   dayLabel,
   categories,
+  calendarConnected = false,
+  isSynced = false,
   onSave,
+  onSyncToCalendar,
   onDelete,
   onClose,
 }: SlotEditorProps) {
@@ -53,6 +59,7 @@ export function SlotEditor({
   const [startTime, setStartTime] = useState(initialStartTime)
   const [endTime, setEndTime] = useState(initialEndTime)
   const [isRecurring, setIsRecurring] = useState(true)
+  const [syncing, setSyncing] = useState(false)
 
   const titleRef = useRef<HTMLInputElement>(null)
 
@@ -78,6 +85,16 @@ export function SlotEditor({
       endTime,
       isRecurring,
     })
+  }
+
+  async function handleSync() {
+    if (!onSyncToCalendar) return
+    setSyncing(true)
+    try {
+      await onSyncToCalendar()
+    } finally {
+      setSyncing(false)
+    }
   }
 
   const inputStyle = {
@@ -203,6 +220,29 @@ export function SlotEditor({
             />
             <span className="text-sm" style={{ color: '#888888' }}>Repeat every week</span>
           </label>
+
+          {/* Google Calendar sync — edit mode only */}
+          {mode === 'edit' && (
+            <div className="flex items-center justify-between pt-0.5">
+              <span className="text-sm" style={{ color: calendarConnected ? '#888888' : '#555555' }}>
+                {isSynced ? 'Synced to Google Calendar' : 'Sync to Google Calendar'}
+              </span>
+              <button
+                onClick={handleSync}
+                disabled={!calendarConnected || syncing}
+                className="text-xs px-3 py-1 rounded-md transition-colors"
+                style={{
+                  background: isSynced ? '#1e3a2f' : calendarConnected ? '#1a2e1a' : '#1a1a1a',
+                  color: isSynced ? '#57bb8A' : calendarConnected ? '#57bb8A' : '#444444',
+                  cursor: calendarConnected ? 'pointer' : 'not-allowed',
+                  border: `1px solid ${isSynced ? '#57bb8A44' : calendarConnected ? '#57bb8A33' : '#333333'}`,
+                }}
+                title={calendarConnected ? undefined : 'Connect Google Calendar in Settings first'}
+              >
+                {syncing ? 'Syncing…' : isSynced ? 'Re-sync' : 'Sync'}
+              </button>
+            </div>
+          )}
 
           {/* Actions */}
           <div className="flex items-center justify-between pt-1">

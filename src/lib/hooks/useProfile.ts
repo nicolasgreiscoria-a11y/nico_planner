@@ -9,6 +9,7 @@ export interface Profile {
   timezone: string | null
   week_start_day: number
   day_start_time: string
+  google_calendar_connected: boolean
 }
 
 export function useProfile() {
@@ -28,7 +29,10 @@ export function useProfile() {
         .single()
       if (data) {
         data.day_start_time = data.day_start_time?.slice(0, 5) ?? '05:00'
-        setProfile(data)
+        setProfile({
+          ...data,
+          google_calendar_connected: !!data.google_refresh_token,
+        })
       }
       setLoading(false)
     }
@@ -55,7 +59,10 @@ export function useProfile() {
         .single()
       if (data) {
         data.day_start_time = data.day_start_time?.slice(0, 5) ?? '05:00'
-        setProfile(data)
+        setProfile({
+          ...data,
+          google_calendar_connected: !!data.google_refresh_token,
+        })
       }
     }
     setSaving(false)

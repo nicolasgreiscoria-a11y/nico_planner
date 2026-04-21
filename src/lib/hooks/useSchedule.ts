@@ -14,6 +14,7 @@ export interface ScheduleEntry {
   title: string | null
   is_recurring: boolean
   effective_date: string | null
+  calendar_event_id: string | null
 }
 
 function normalizeTime(t: string): string {
@@ -105,5 +106,20 @@ export function useSchedule(weekStart: Date) {
     await supabase.from('schedule_entries').delete().eq('id', id)
   }, [supabase])
 
-  return { entries, loading, add, update, remove }
+  const syncToCalendar = useCallback(async (entryId: string) => {
+    const res = await fetch('/api/calendar/sync_block', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ entry_id: entryId }),
+    })
+    const json = await res.json()
+    if (json.calendar_event_id) {
+      setEntries(prev =>
+        prev.map(e => e.id === entryId ? { ...e, calendar_event_id: json.calendar_event_id } : e)
+      )
+    }
+    if (!res.ok) throw new Error(json.error ?? 'Sync failed')
+  }, [])
+
+  return { entries, loading, add, update, remove, syncToCalendar }
 }

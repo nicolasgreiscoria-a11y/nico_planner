@@ -282,7 +282,7 @@ const schemaOrg = {
   name: 'HabitCircuit',
   applicationCategory: 'LifestyleApplication',
   operatingSystem: 'Web',
-  url: 'https://nico-planner.vercel.app',
+  url: 'https://habitcircuitapp.com',
   description:
     'HabitCircuit is a weekly planner, habit tracker, and task manager built for students who want to follow through on their goals.',
   offers: {

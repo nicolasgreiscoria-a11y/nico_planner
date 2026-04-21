@@ -4,12 +4,12 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "HabitCircuit",
   description: "Your weekly planner and habit tracker",
-  metadataBase: new URL("https://nico-planner.vercel.app"),
+  metadataBase: new URL("https://habitcircuitapp.com"),
   openGraph: {
     title: "HabitCircuit — Weekly Planner & Habit Tracker",
     description: "Stop drifting. Start doing. One system for your schedule, habits, tasks, and daily notes.",
     type: "website",
-    url: "https://nico-planner.vercel.app",
+    url: "https://habitcircuitapp.com",
     siteName: "HabitCircuit",
   },
   twitter: {

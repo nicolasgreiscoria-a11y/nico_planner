@@ -217,7 +217,7 @@ type EditorState = CreateState | EditState | null
 
 export function WeekGrid() {
   const { weekStart } = useWeek()
-  const { entries, loading, add, update, remove } = useSchedule(weekStart)
+  const { entries, loading, add, update, remove, syncToCalendar } = useSchedule(weekStart)
   const { categories } = useCategories()
   const { profile } = useProfile()
   const [editorState, setEditorState] = useState<EditorState>(null)
@@ -349,7 +349,14 @@ export function WeekGrid() {
           initialEndTime={editorState.mode === 'create' ? editorState.endTime : editorState.entry.end_time}
           dayLabel={editorDayLabel}
           categories={categories}
+          calendarConnected={profile?.google_calendar_connected ?? false}
+          isSynced={editorState.mode === 'edit' ? !!editorState.entry.calendar_event_id : false}
           onSave={handleSave}
+          onSyncToCalendar={
+            editorState.mode === 'edit'
+              ? () => syncToCalendar(editorState.entry.id)
+              : undefined
+          }
           onDelete={editorState.mode === 'edit' ? handleDelete : undefined}
           onClose={() => setEditorState(null)}
         />

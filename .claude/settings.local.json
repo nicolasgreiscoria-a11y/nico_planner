@@ -9,7 +9,25 @@
       "Bash(npx vercel:*)",
       "Bash(printf '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')",
       "mcp__claude_ai_Vercel__deploy_to_vercel",
-      "Bash(node -e \"const {google} = require\\(''''googleapis''''\\); const t = google.auth.OAuth2; console.log\\(Object.keys\\(require\\(''''googleapis/build/src/auth/oauth2client''''\\)\\)\\)\")"
+      "Bash(node -e \"const {google} = require\\(''''googleapis''''\\); const t = google.auth.OAuth2; console.log\\(Object.keys\\(require\\(''''googleapis/build/src/auth/oauth2client''''\\)\\)\\)\")",
+      "Bash(npx playwright *)",
+      "mcp__plugin_playwright_playwright__browser_navigate",
+      "mcp__plugin_playwright_playwright__browser_take_screenshot",
+      "Bash(node -e ' *)",
+      "Bash(npx next *)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:3001/)",
+      "Bash(curl -v http://localhost:3001/opengraph-image)",
+      "Bash(curl -s -o og-preview.png -w \"%{http_code} %{content_type}\" http://localhost:3001/opengraph-image)",
+      "Bash(npx kill-port *)",
+      "Bash(curl -s -o og-test.png -w \"%{http_code} %{content_type} size:%{size_download}\" \"http://localhost:3001/opengraph-image\")",
+      "Bash(curl *)",
+      "Bash(gsd *)",
+      "Bash(npm run *)",
+      "mcp__plugin_vercel_vercel__get_project",
+      "mcp__plugin_vercel_vercel__list_deployments",
+      "mcp__plugin_vercel_vercel__list_teams",
+      "mcp__plugin_vercel_vercel__list_projects",
+      "Bash(vercel --version)"
     ]
   }
 }
