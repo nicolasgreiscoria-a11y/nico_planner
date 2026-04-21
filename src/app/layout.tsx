@@ -1,5 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
+import { NextIntlClientProvider } from 'next-intl'
+import { getMessages } from 'next-intl/server'
 
 export const metadata: Metadata = {
   title: "HabitCircuit",
@@ -29,11 +31,13 @@ export const viewport: Viewport = {
   themeColor: "#0a0a0c",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const messages = await getMessages()
+
   return (
     <html lang="en">
       <head>
@@ -45,7 +49,9 @@ export default function RootLayout({
         />
       </head>
       <body className="antialiased">
-        {children}
+        <NextIntlClientProvider messages={messages}>
+          {children}
+        </NextIntlClientProvider>
       </body>
     </html>
   );
