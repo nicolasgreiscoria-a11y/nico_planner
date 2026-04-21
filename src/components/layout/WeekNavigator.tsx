@@ -1,16 +1,18 @@
 'use client'
 
 import { useWeek } from '@/lib/context/WeekContext'
+import { useTranslations } from 'next-intl'
 
 export function WeekNavigator() {
   const { weekLabel, goToPrevWeek, goToNextWeek, goToToday } = useWeek()
+  const t = useTranslations('weekNavigator')
 
   return (
     <div className="flex items-center gap-2">
       <button
         onClick={goToPrevWeek}
         className="p-1.5 rounded-md transition-colors hover:bg-[#2A2A2A]"
-        aria-label="Previous week"
+        aria-label={t('previousWeek')}
         style={{ color: '#888888' }}
       >
         <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
@@ -28,7 +30,7 @@ export function WeekNavigator() {
       <button
         onClick={goToNextWeek}
         className="p-1.5 rounded-md transition-colors hover:bg-[#2A2A2A]"
-        aria-label="Next week"
+        aria-label={t('nextWeek')}
         style={{ color: '#888888' }}
       >
         <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
@@ -41,7 +43,7 @@ export function WeekNavigator() {
         className="ml-1 px-3 py-1 rounded-md text-xs font-medium transition-colors hover:bg-[#2A2A2A]"
         style={{ color: '#57bb8A', border: '1px solid #57bb8A33' }}
       >
-        Today
+        {t('thisWeek')}
       </button>
     </div>
   )
