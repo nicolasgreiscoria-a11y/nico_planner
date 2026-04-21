@@ -2,6 +2,10 @@
 
 import { useEffect, useState } from 'react'
 import { useProfile } from '@/lib/hooks/useProfile'
+import { useTranslations } from 'next-intl'
+import { setLocale } from '@/lib/actions/locale'
+import { useRouter } from 'next/navigation'
+import type { Locale } from '@/i18n/request'
 
 const TIMEZONES = [
   'America/Argentina/Buenos_Aires',
@@ -52,6 +56,13 @@ const inputStyle = {
 
 export function ProfileSettings() {
   const { profile, loading, saving, save } = useProfile()
+  const t = useTranslations('settings')
+  const router = useRouter()
+
+  async function handleLocaleChange(locale: Locale) {
+    await setLocale(locale)
+    router.refresh()
+  }
 
   const [displayName, setDisplayName] = useState('')
   const [timezone, setTimezone] = useState('America/Argentina/Buenos_Aires')
@@ -135,6 +146,26 @@ export function ProfileSettings() {
       >
         {saving ? 'Saving...' : 'Save changes'}
       </button>
+
+      <div className="mt-8 border-t border-[#2A2A2A] pt-6">
+        <h3 className="text-sm font-medium text-[#888888] uppercase tracking-wider mb-4">
+          {t('language')}
+        </h3>
+        <div className="flex gap-2">
+          <button
+            onClick={() => handleLocaleChange('en')}
+            className="px-4 py-2 rounded-md text-sm font-medium transition-colors bg-[#1A1A1A] border border-[#2A2A2A] hover:border-[#57bb8A] text-[#E8E8E8]"
+          >
+            {t('languages.en')}
+          </button>
+          <button
+            onClick={() => handleLocaleChange('es')}
+            className="px-4 py-2 rounded-md text-sm font-medium transition-colors bg-[#1A1A1A] border border-[#2A2A2A] hover:border-[#57bb8A] text-[#E8E8E8]"
+          >
+            {t('languages.es')}
+          </button>
+        </div>
+      </div>
     </div>
   )
 }
