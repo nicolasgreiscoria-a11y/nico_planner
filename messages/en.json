@@ -1,0 +1,181 @@
+{
+  "common": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "add": "Add",
+    "loading": "Loading...",
+    "saving": "Saving...",
+    "close": "Close",
+    "confirm": "Confirm",
+    "signOut": "Sign out",
+    "comingSoon": "Coming soon",
+    "noData": "No data yet",
+    "error": "Something went wrong. Please try again."
+  },
+  "nav": {
+    "overview": "Overview",
+    "schedule": "Schedule",
+    "habits": "Habits",
+    "tasks": "Tasks",
+    "settings": "Settings",
+    "toggleMenu": "Toggle menu"
+  },
+  "topBar": {
+    "greeting": "Hey, {name}",
+    "signOut": "Sign out"
+  },
+  "weekNavigator": {
+    "previousWeek": "Previous week",
+    "nextWeek": "Next week",
+    "thisWeek": "This week",
+    "weekLabel": "Week of {date}"
+  },
+  "login": {
+    "tagline": "Your weekly planner and habit tracker",
+    "signIn": "Sign in",
+    "signUp": "Sign up",
+    "email": "Email",
+    "emailPlaceholder": "you@example.com",
+    "password": "Password",
+    "passwordPlaceholder": "••••••••",
+    "passwordHint": "At least 6 characters",
+    "loading": "Please wait...",
+    "createAccount": "Create account",
+    "confirmEmail": "Check your email to confirm your account, then sign in.",
+    "backToSignIn": "Back to sign in",
+    "haveAccount": "Already have an account?",
+    "noAccount": "Don't have an account?"
+  },
+  "overview": {
+    "habitsThisWeek": "Habits this week",
+    "tasksCompleted": "Tasks completed",
+    "todaysTodos": "Today's to-dos",
+    "weeklyTasks": "Weekly tasks",
+    "completionPercent": "{percent}%"
+  },
+  "schedule": {
+    "addBlock": "Add block",
+    "editBlock": "Edit block",
+    "category": "Category",
+    "blockTitle": "Title",
+    "startTime": "Start time",
+    "endTime": "End time",
+    "recurring": "Recurring every week",
+    "syncToCalendar": "Sync to Google Calendar",
+    "noCategory": "No category",
+    "deleteConfirm": "Delete this block?",
+    "days": {
+      "mon": "Mon",
+      "tue": "Tue",
+      "wed": "Wed",
+      "thu": "Thu",
+      "fri": "Fri",
+      "sat": "Sat",
+      "sun": "Sun",
+      "monday": "Monday",
+      "tuesday": "Tuesday",
+      "wednesday": "Wednesday",
+      "thursday": "Thursday",
+      "friday": "Friday",
+      "saturday": "Saturday",
+      "sunday": "Sunday"
+    }
+  },
+  "habits": {
+    "addHabit": "Add habit",
+    "editHabit": "Edit habit",
+    "habitName": "Habit name",
+    "completion": "Completion",
+    "noHabits": "No habits yet. Add one to get started.",
+    "weekCompletion": "{percent}% this week",
+    "deleteConfirm": "Delete this habit?",
+    "days": {
+      "mon": "M",
+      "tue": "T",
+      "wed": "W",
+      "thu": "T",
+      "fri": "F",
+      "sat": "S",
+      "sun": "S"
+    }
+  },
+  "tasks": {
+    "addTask": "Add task",
+    "editTask": "Edit task",
+    "taskTitle": "Title",
+    "description": "Description",
+    "priority": "Priority",
+    "status": "Status",
+    "type": "Type",
+    "startDate": "Start date",
+    "endDate": "End date",
+    "syncToCalendar": "Sync to calendar",
+    "noTasks": "No tasks yet.",
+    "deleteConfirm": "Delete this task?",
+    "priorities": {
+      "low": "Low",
+      "medium": "Medium",
+      "high": "High"
+    },
+    "statuses": {
+      "todo": "To do",
+      "in_progress": "In progress",
+      "done": "Done",
+      "cancelled": "Cancelled"
+    },
+    "types": {
+      "event": "Event",
+      "project": "Project",
+      "deadline": "Deadline",
+      "other": "Other"
+    }
+  },
+  "daily": {
+    "todos": "To-dos",
+    "notes": "Notes",
+    "addTodo": "Add to-do",
+    "notesPlaceholder": "Write your notes for today...",
+    "noTodos": "Nothing here yet.",
+    "priority": {
+      "low": "Low",
+      "medium": "Medium",
+      "high": "High"
+    }
+  },
+  "weeklyTasks": {
+    "title": "Weekly tasks",
+    "addTask": "Add task",
+    "noTasks": "No weekly tasks."
+  },
+  "settings": {
+    "profile": "Profile",
+    "displayName": "Display name",
+    "timezone": "Timezone",
+    "weekStartDay": "Week starts on",
+    "dayStartTime": "Day starts at",
+    "saveChanges": "Save changes",
+    "saved": "Saved!",
+    "categories": "Categories",
+    "addCategory": "Add category",
+    "categoryName": "Category name",
+    "color": "Color",
+    "deleteCategory": "Delete category",
+    "googleCalendar": "Google Calendar",
+    "connectCalendar": "Connect Google Calendar",
+    "disconnectCalendar": "Disconnect",
+    "calendarConnected": "Connected",
+    "calendarNotConnected": "Not connected",
+    "calendarDescription": "Sync your schedule blocks and tasks to Google Calendar.",
+    "language": "Language",
+    "languages": {
+      "en": "English",
+      "es": "Español"
+    },
+    "days": {
+      "monday": "Monday",
+      "sunday": "Sunday"
+    }
+  }
+}

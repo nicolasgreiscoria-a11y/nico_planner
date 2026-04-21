@@ -1,0 +1,181 @@
+{
+  "common": {
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "delete": "Eliminar",
+    "edit": "Editar",
+    "add": "Agregar",
+    "loading": "Cargando...",
+    "saving": "Guardando...",
+    "close": "Cerrar",
+    "confirm": "Confirmar",
+    "signOut": "Cerrar sesión",
+    "comingSoon": "Próximamente",
+    "noData": "Sin datos todavía",
+    "error": "Algo salió mal. Por favor intenta de nuevo."
+  },
+  "nav": {
+    "overview": "Resumen",
+    "schedule": "Horario",
+    "habits": "Hábitos",
+    "tasks": "Tareas",
+    "settings": "Configuración",
+    "toggleMenu": "Alternar menú"
+  },
+  "topBar": {
+    "greeting": "Hola, {name}",
+    "signOut": "Cerrar sesión"
+  },
+  "weekNavigator": {
+    "previousWeek": "Semana anterior",
+    "nextWeek": "Semana siguiente",
+    "thisWeek": "Esta semana",
+    "weekLabel": "Semana del {date}"
+  },
+  "login": {
+    "tagline": "Tu planificador semanal y rastreador de hábitos",
+    "signIn": "Iniciar sesión",
+    "signUp": "Registrarse",
+    "email": "Correo electrónico",
+    "emailPlaceholder": "tu@ejemplo.com",
+    "password": "Contraseña",
+    "passwordPlaceholder": "••••••••",
+    "passwordHint": "Al menos 6 caracteres",
+    "loading": "Por favor espera...",
+    "createAccount": "Crear cuenta",
+    "confirmEmail": "Revisa tu correo para confirmar tu cuenta y luego inicia sesión.",
+    "backToSignIn": "Volver a iniciar sesión",
+    "haveAccount": "¿Ya tienes una cuenta?",
+    "noAccount": "¿No tienes una cuenta?"
+  },
+  "overview": {
+    "habitsThisWeek": "Hábitos esta semana",
+    "tasksCompleted": "Tareas completadas",
+    "todaysTodos": "Pendientes de hoy",
+    "weeklyTasks": "Tareas semanales",
+    "completionPercent": "{percent}%"
+  },
+  "schedule": {
+    "addBlock": "Agregar bloque",
+    "editBlock": "Editar bloque",
+    "category": "Categoría",
+    "blockTitle": "Título",
+    "startTime": "Hora de inicio",
+    "endTime": "Hora de fin",
+    "recurring": "Se repite cada semana",
+    "syncToCalendar": "Sincronizar con Google Calendar",
+    "noCategory": "Sin categoría",
+    "deleteConfirm": "¿Eliminar este bloque?",
+    "days": {
+      "mon": "Lun",
+      "tue": "Mar",
+      "wed": "Mié",
+      "thu": "Jue",
+      "fri": "Vie",
+      "sat": "Sáb",
+      "sun": "Dom",
+      "monday": "Lunes",
+      "tuesday": "Martes",
+      "wednesday": "Miércoles",
+      "thursday": "Jueves",
+      "friday": "Viernes",
+      "saturday": "Sábado",
+      "sunday": "Domingo"
+    }
+  },
+  "habits": {
+    "addHabit": "Agregar hábito",
+    "editHabit": "Editar hábito",
+    "habitName": "Nombre del hábito",
+    "completion": "Completado",
+    "noHabits": "Sin hábitos todavía. Agrega uno para empezar.",
+    "weekCompletion": "{percent}% esta semana",
+    "deleteConfirm": "¿Eliminar este hábito?",
+    "days": {
+      "mon": "L",
+      "tue": "M",
+      "wed": "M",
+      "thu": "J",
+      "fri": "V",
+      "sat": "S",
+      "sun": "D"
+    }
+  },
+  "tasks": {
+    "addTask": "Agregar tarea",
+    "editTask": "Editar tarea",
+    "taskTitle": "Título",
+    "description": "Descripción",
+    "priority": "Prioridad",
+    "status": "Estado",
+    "type": "Tipo",
+    "startDate": "Fecha de inicio",
+    "endDate": "Fecha de fin",
+    "syncToCalendar": "Sincronizar con calendario",
+    "noTasks": "Sin tareas todavía.",
+    "deleteConfirm": "¿Eliminar esta tarea?",
+    "priorities": {
+      "low": "Baja",
+      "medium": "Media",
+      "high": "Alta"
+    },
+    "statuses": {
+      "todo": "Por hacer",
+      "in_progress": "En progreso",
+      "done": "Hecho",
+      "cancelled": "Cancelado"
+    },
+    "types": {
+      "event": "Evento",
+      "project": "Proyecto",
+      "deadline": "Fecha límite",
+      "other": "Otro"
+    }
+  },
+  "daily": {
+    "todos": "Pendientes",
+    "notes": "Notas",
+    "addTodo": "Agregar pendiente",
+    "notesPlaceholder": "Escribe tus notas de hoy...",
+    "noTodos": "Nada por aquí todavía.",
+    "priority": {
+      "low": "Baja",
+      "medium": "Media",
+      "high": "Alta"
+    }
+  },
+  "weeklyTasks": {
+    "title": "Tareas semanales",
+    "addTask": "Agregar tarea",
+    "noTasks": "Sin tareas semanales."
+  },
+  "settings": {
+    "profile": "Perfil",
+    "displayName": "Nombre de pantalla",
+    "timezone": "Zona horaria",
+    "weekStartDay": "La semana empieza el",
+    "dayStartTime": "El día empieza a las",
+    "saveChanges": "Guardar cambios",
+    "saved": "¡Guardado!",
+    "categories": "Categorías",
+    "addCategory": "Agregar categoría",
+    "categoryName": "Nombre de categoría",
+    "color": "Color",
+    "deleteCategory": "Eliminar categoría",
+    "googleCalendar": "Google Calendar",
+    "connectCalendar": "Conectar Google Calendar",
+    "disconnectCalendar": "Desconectar",
+    "calendarConnected": "Conectado",
+    "calendarNotConnected": "No conectado",
+    "calendarDescription": "Sincroniza tus bloques y tareas con Google Calendar.",
+    "language": "Idioma",
+    "languages": {
+      "en": "English",
+      "es": "Español"
+    },
+    "days": {
+      "monday": "Lunes",
+      "sunday": "Domingo"
+    }
+  }
+}
