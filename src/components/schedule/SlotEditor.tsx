@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import { useTranslations } from 'next-intl'
 import { Category } from '@/lib/hooks/useCategories'
 
 interface SlotEditorProps {
@@ -54,6 +55,9 @@ export function SlotEditor({
   onDelete,
   onClose,
 }: SlotEditorProps) {
+  const t = useTranslations('schedule')
+  const tc = useTranslations('common')
+
   const [title, setTitle] = useState(initialTitle ?? '')
   const [categoryId, setCategoryId] = useState(initialCategoryId ?? '')
   const [startTime, setStartTime] = useState(initialStartTime)
@@ -142,7 +146,7 @@ export function SlotEditor({
           {/* Header */}
           <div className="flex items-center justify-between">
             <span className="text-sm font-semibold" style={{ color: '#E8E8E8', fontFamily: 'DM Sans, sans-serif' }}>
-              {mode === 'create' ? 'Add block' : 'Edit block'} — {dayLabel}
+              {mode === 'create' ? t('addBlock') : t('editBlock')} — {dayLabel}
             </span>
             <button onClick={onClose} className="p-1 rounded hover:bg-[#2A2A2A]" style={{ color: '#888888' }}>
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
@@ -153,7 +157,7 @@ export function SlotEditor({
 
           {/* Title */}
           <div className="space-y-1.5">
-            <label style={labelStyle}>Title</label>
+            <label style={labelStyle}>{t('blockTitle')}</label>
             <input
               ref={titleRef}
               type="text"
@@ -167,7 +171,7 @@ export function SlotEditor({
 
           {/* Category */}
           <div className="space-y-1.5">
-            <label style={labelStyle}>Category</label>
+            <label style={labelStyle}>{t('category')}</label>
             <select
               value={categoryId}
               onChange={e => setCategoryId(e.target.value)}
@@ -176,7 +180,7 @@ export function SlotEditor({
                 color: selectedCategory ? selectedCategory.color : '#E8E8E8',
               }}
             >
-              <option value="">— No category —</option>
+              <option value="">— {t('noCategory')} —</option>
               {categories.map(cat => (
                 <option key={cat.id} value={cat.id} style={{ color: cat.color }}>
                   {cat.name}
@@ -188,7 +192,7 @@ export function SlotEditor({
           {/* Time range */}
           <div className="flex gap-3">
             <div className="flex-1 space-y-1.5">
-              <label style={labelStyle}>Start</label>
+              <label style={labelStyle}>{t('startTime')}</label>
               <input
                 type="time"
                 value={startTime}
@@ -197,7 +201,7 @@ export function SlotEditor({
               />
             </div>
             <div className="flex-1 space-y-1.5">
-              <label style={labelStyle}>End</label>
+              <label style={labelStyle}>{t('endTime')}</label>
               <select
                 value={endTime}
                 onChange={e => setEndTime(e.target.value)}
@@ -218,14 +222,14 @@ export function SlotEditor({
               onChange={e => setIsRecurring(e.target.checked)}
               className="w-4 h-4 accent-[#57bb8A]"
             />
-            <span className="text-sm" style={{ color: '#888888' }}>Repeat every week</span>
+            <span className="text-sm" style={{ color: '#888888' }}>{t('recurring')}</span>
           </label>
 
           {/* Google Calendar sync — edit mode only */}
           {mode === 'edit' && (
             <div className="flex items-center justify-between pt-0.5">
               <span className="text-sm" style={{ color: calendarConnected ? '#888888' : '#555555' }}>
-                {isSynced ? 'Synced to Google Calendar' : 'Sync to Google Calendar'}
+                {t('syncToCalendar')}
               </span>
               <button
                 onClick={handleSync}
@@ -239,7 +243,7 @@ export function SlotEditor({
                 }}
                 title={calendarConnected ? undefined : 'Connect Google Calendar in Settings first'}
               >
-                {syncing ? 'Syncing…' : isSynced ? 'Re-sync' : 'Sync'}
+                {syncing ? tc('saving') : tc('save')}
               </button>
             </div>
           )}
@@ -252,7 +256,7 @@ export function SlotEditor({
                 className="text-xs px-3 py-1.5 rounded-md transition-colors hover:bg-[#2A2A2A]"
                 style={{ color: '#E67C73' }}
               >
-                Delete
+                {tc('delete')}
               </button>
             ) : <span />}
             <div className="flex gap-2">
@@ -261,14 +265,14 @@ export function SlotEditor({
                 className="text-xs px-3 py-1.5 rounded-md transition-colors hover:bg-[#2A2A2A]"
                 style={{ color: '#888888' }}
               >
-                Cancel
+                {tc('cancel')}
               </button>
               <button
                 onClick={handleSave}
                 className="text-xs px-4 py-1.5 rounded-md font-medium"
                 style={{ background: '#57bb8A', color: '#0F0F0F' }}
               >
-                {mode === 'create' ? 'Add' : 'Save'}
+                {mode === 'create' ? tc('add') : tc('save')}
               </button>
             </div>
           </div>
