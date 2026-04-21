@@ -2,13 +2,14 @@
 
 import { useState } from 'react'
 import { format, addDays } from 'date-fns'
+import { useTranslations } from 'next-intl'
 import { useWeek } from '@/lib/context/WeekContext'
 import { useDailyTodos } from '@/lib/hooks/useDailyTodos'
 import { useDailyNotes } from '@/lib/hooks/useDailyNotes'
 import { DailyTodoList } from './DailyTodoList'
 import { DailyNotes } from './DailyNotes'
 
-const DAY_NAMES = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+const DAY_KEYS = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'] as const
 
 function DayPanel({
   dayIndex,
@@ -21,6 +22,7 @@ function DayPanel({
   todosHook: ReturnType<typeof useDailyTodos>
   notesHook: ReturnType<typeof useDailyNotes>
 }) {
+  const t = useTranslations('schedule')
   const [open, setOpen] = useState(false)
   const dateStr = format(date, 'yyyy-MM-dd')
   const isToday = dateStr === format(new Date(), 'yyyy-MM-dd')
@@ -49,7 +51,7 @@ function DayPanel({
             className="text-xs font-semibold"
             style={{ color: isToday ? '#57bb8A' : '#888888', fontFamily: 'DM Sans, sans-serif' }}
           >
-            {DAY_NAMES[dayIndex]}
+            {t(`days.${DAY_KEYS[dayIndex]}`)}
           </span>
           <span className="text-xs" style={{ color: '#444444' }}>
             {format(date, 'd')}
