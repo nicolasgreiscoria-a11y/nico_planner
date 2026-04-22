@@ -14,7 +14,7 @@ export default function NotFound() {
           Page not found
         </h1>
         <p className="text-sm" style={{ color: '#888888' }}>
-          The page you're looking for doesn't exist.
+          The page you&apos;re looking for doesn&apos;t exist.
         </p>
         <Link
           href="/dashboard"
