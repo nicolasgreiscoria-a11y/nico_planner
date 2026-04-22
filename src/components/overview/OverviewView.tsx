@@ -1,6 +1,7 @@
 'use client'
 
 import { format, startOfWeek, addDays, isWithinInterval } from 'date-fns'
+import { useTranslations } from 'next-intl'
 import { useHabits } from '@/lib/hooks/useHabits'
 import { useWeeklyTasks } from '@/lib/hooks/useWeeklyTasks'
 import { useSchedule } from '@/lib/hooks/useSchedule'
@@ -39,6 +40,7 @@ function Empty({ text }: { text: string }) {
 // ─── Today's Schedule ─────────────────────────────────────────────────────────
 
 function TodaySchedule({ weekStart, todayIndex }: { weekStart: Date; todayIndex: number }) {
+  const to = useTranslations('overview')
   const { entries } = useSchedule(weekStart)
   const { categories } = useCategories()
 
@@ -47,9 +49,9 @@ function TodaySchedule({ weekStart, todayIndex }: { weekStart: Date; todayIndex:
     .sort((a, b) => a.start_time.localeCompare(b.start_time))
 
   return (
-    <Card title="Today's Schedule" className="row-span-2">
+    <Card title={to('todaysSchedule')} className="row-span-2">
       {todayEntries.length === 0 ? (
-        <Empty text="Nothing scheduled today." />
+        <Empty text={to('nothingScheduled')} />
       ) : (
         <ul className="space-y-2">
           {todayEntries.map(entry => {
@@ -84,12 +86,13 @@ function TodaySchedule({ weekStart, todayIndex }: { weekStart: Date; todayIndex:
 // ─── Today's Habits ───────────────────────────────────────────────────────────
 
 function TodayHabits({ weekStart, todayStr }: { weekStart: Date; todayStr: string }) {
+  const to = useTranslations('overview')
   const { habits, toggle, isCompleted } = useHabits(weekStart)
 
   return (
-    <Card title="Today's Habits">
+    <Card title={to('todaysHabits')}>
       {habits.length === 0 ? (
-        <Empty text="No habits set up yet." />
+        <Empty text={to('noHabits')} />
       ) : (
         <ul className="space-y-2">
           {habits.map(habit => {
@@ -131,12 +134,13 @@ function TodayHabits({ weekStart, todayStr }: { weekStart: Date; todayStr: strin
 // ─── Weekly Tasks ─────────────────────────────────────────────────────────────
 
 function WeeklyTasksCard({ weekStart }: { weekStart: Date }) {
+  const to = useTranslations('overview')
   const { tasks, toggle, isCompleted, completedCount } = useWeeklyTasks(weekStart)
 
   return (
-    <Card title={`Weekly Tasks${tasks.length > 0 ? ` — ${completedCount}/${tasks.length} done` : ''}`}>
+    <Card title={`${to('weeklyTasks')}${tasks.length > 0 ? ` — ${completedCount}/${tasks.length}` : ''}`}>
       {tasks.length === 0 ? (
-        <Empty text="No weekly tasks." />
+        <Empty text={to('noWeeklyTasks')} />
       ) : (
         <ul className="space-y-2">
           {tasks.map(task => {
@@ -184,6 +188,7 @@ const STATUS_COLOR: Record<string, string> = {
 }
 
 function UpcomingTasksCard() {
+  const to = useTranslations('overview')
   const { tasks } = useTasks()
   const today = new Date()
   const sevenDaysOut = addDays(today, 7)
@@ -200,9 +205,9 @@ function UpcomingTasksCard() {
     .sort((a, b) => (a.end_date ?? '').localeCompare(b.end_date ?? ''))
 
   return (
-    <Card title="Upcoming (next 7 days)">
+    <Card title={to('upcoming')}>
       {upcoming.length === 0 ? (
-        <Empty text="Nothing due in the next 7 days." />
+        <Empty text={to('nothingDue')} />
       ) : (
         <ul className="space-y-2.5">
           {upcoming.map(task => (
@@ -231,14 +236,15 @@ function UpcomingTasksCard() {
 // ─── Today's Todos ────────────────────────────────────────────────────────────
 
 function TodayTodosCard({ weekStart, todayStr }: { weekStart: Date; todayStr: string }) {
+  const to = useTranslations('overview')
   const todosHook = useDailyTodos(weekStart)
   const { categories } = useCategories()
   const todos = todosHook.forDate(todayStr)
 
   return (
-    <Card title="Today's To-do">
+    <Card title={to('todaysTodos')}>
       {todos.length === 0 ? (
-        <Empty text="No to-dos for today." />
+        <Empty text={to('noTodos')} />
       ) : (
         <ul className="space-y-2">
           {todos.map(todo => {
@@ -289,21 +295,23 @@ function TodayTodosCard({ weekStart, todayStr }: { weekStart: Date; todayStr: st
 // ─── Today's Notes ────────────────────────────────────────────────────────────
 
 function TodayNotesCard({ weekStart, todayStr }: { weekStart: Date; todayStr: string }) {
+  const to = useTranslations('overview')
+  const tc = useTranslations('common')
   const notesHook = useDailyNotes(weekStart)
 
   return (
-    <Card title="Today's Notes">
+    <Card title={to('todaysNotes')}>
       <textarea
         value={notesHook.getNote(todayStr)}
         onChange={e => notesHook.updateNote(todayStr, e.target.value)}
         onBlur={() => notesHook.flushNote(todayStr)}
-        placeholder="Notes for today..."
+        placeholder={to('notesPlaceholder')}
         rows={5}
         className="w-full bg-transparent text-sm resize-none outline-none placeholder-[#333333] leading-relaxed"
         style={{ color: '#E8E8E8' }}
       />
       {notesHook.isSaving(todayStr) && (
-        <p className="text-[10px] mt-1" style={{ color: '#555555' }}>saving...</p>
+        <p className="text-[10px] mt-1" style={{ color: '#555555' }}>{tc('saving')}</p>
       )}
     </Card>
   )
@@ -312,6 +320,7 @@ function TodayNotesCard({ weekStart, todayStr }: { weekStart: Date; todayStr: st
 // ─── Main overview ────────────────────────────────────────────────────────────
 
 export function OverviewView() {
+  const to = useTranslations('overview')
   const today = new Date()
   const todayStr = format(today, 'yyyy-MM-dd')
   const weekStart = startOfWeek(today, { weekStartsOn: 1 })
@@ -330,7 +339,7 @@ export function OverviewView() {
           className="text-2xl font-bold"
           style={{ color: '#E8E8E8', fontFamily: 'DM Sans, sans-serif' }}
         >
-          Overview
+          {to('pageTitle')}
         </h1>
         <p className="text-sm mt-0.5" style={{ color: '#888888' }}>{dateLabel}</p>
       </div>

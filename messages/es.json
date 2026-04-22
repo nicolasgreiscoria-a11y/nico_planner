@@ -53,7 +53,18 @@
     "tasksCompleted": "Tareas completadas",
     "todaysTodos": "Pendientes de hoy",
     "weeklyTasks": "Tareas semanales",
-    "completionPercent": "{percent}%"
+    "completionPercent": "{percent}%",
+    "pageTitle": "Resumen",
+    "todaysSchedule": "Horario de hoy",
+    "todaysHabits": "Hábitos de hoy",
+    "todaysNotes": "Notas de hoy",
+    "upcoming": "Próximos (7 días)",
+    "nothingScheduled": "Nada programado hoy.",
+    "noHabits": "Sin hábitos configurados todavía.",
+    "noWeeklyTasks": "Sin tareas semanales.",
+    "noTodos": "Sin pendientes para hoy.",
+    "nothingDue": "Nada vence en los próximos 7 días.",
+    "notesPlaceholder": "Notas de hoy..."
   },
   "schedule": {
     "addBlock": "Agregar bloque",

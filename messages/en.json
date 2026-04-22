@@ -53,7 +53,18 @@
     "tasksCompleted": "Tasks completed",
     "todaysTodos": "Today's to-dos",
     "weeklyTasks": "Weekly tasks",
-    "completionPercent": "{percent}%"
+    "completionPercent": "{percent}%",
+    "pageTitle": "Overview",
+    "todaysSchedule": "Today's Schedule",
+    "todaysHabits": "Today's Habits",
+    "todaysNotes": "Today's Notes",
+    "upcoming": "Upcoming (next 7 days)",
+    "nothingScheduled": "Nothing scheduled today.",
+    "noHabits": "No habits set up yet.",
+    "noWeeklyTasks": "No weekly tasks.",
+    "noTodos": "No to-dos for today.",
+    "nothingDue": "Nothing due in the next 7 days.",
+    "notesPlaceholder": "Notes for today..."
   },
   "schedule": {
     "addBlock": "Add block",
