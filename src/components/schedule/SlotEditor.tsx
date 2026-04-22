@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { useTranslations } from 'next-intl'
 import { Category } from '@/lib/hooks/useCategories'
+import { useToast } from '@/lib/context/ToastContext'
 
 interface SlotEditorProps {
   mode: 'create' | 'edit'
@@ -64,6 +65,7 @@ export function SlotEditor({
   const [endTime, setEndTime] = useState(initialEndTime)
   const [isRecurring, setIsRecurring] = useState(true)
   const [syncing, setSyncing] = useState(false)
+  const { addToast } = useToast()
 
   const titleRef = useRef<HTMLInputElement>(null)
 
@@ -96,6 +98,9 @@ export function SlotEditor({
     setSyncing(true)
     try {
       await onSyncToCalendar()
+      addToast('Synced to Google Calendar', 'success')
+    } catch (err) {
+      addToast(err instanceof Error ? err.message : 'Sync failed', 'error')
     } finally {
       setSyncing(false)
     }

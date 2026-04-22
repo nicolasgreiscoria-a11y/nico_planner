@@ -44,11 +44,14 @@ export async function POST(req: NextRequest) {
   const calendar = getCalendarClient(profile.google_refresh_token)
 
   const date = entry.effective_date ?? nextOccurrence(entry.day_of_week)
+  // Postgres TIME comes as "HH:MM:SS" — strip seconds before building ISO datetime
+  const startTime = entry.start_time.slice(0, 5)
+  const endTime = entry.end_time.slice(0, 5)
 
   const eventBody = {
     summary: entry.title ?? 'Schedule block',
-    start: { dateTime: `${date}T${entry.start_time}:00`, timeZone: TIMEZONE },
-    end: { dateTime: `${date}T${entry.end_time}:00`, timeZone: TIMEZONE },
+    start: { dateTime: `${date}T${startTime}:00`, timeZone: TIMEZONE },
+    end: { dateTime: `${date}T${endTime}:00`, timeZone: TIMEZONE },
   }
 
   let calendarEventId: string
