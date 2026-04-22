@@ -190,7 +190,7 @@ export function HabitTable() {
                       onClick={() => removeHabit(habit.id)}
                       className="opacity-0 group-hover:opacity-100 transition-opacity p-0.5 rounded"
                       style={{ color: '#555555' }}
-                      title="Remove habit"
+                      title={t('removeHabit')}
                     >
                       <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
                         <path d="M2 2l8 8M10 2L2 10" />

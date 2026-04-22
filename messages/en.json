@@ -71,10 +71,12 @@
     "editBlock": "Edit block",
     "category": "Category",
     "blockTitle": "Title",
+    "blockTitlePlaceholder": "e.g. Lecture, Practice...",
     "startTime": "Start time",
     "endTime": "End time",
     "recurring": "Recurring every week",
     "syncToCalendar": "Sync to Google Calendar",
+    "calendarNotConnectedTooltip": "Connect Google Calendar in Settings first",
     "noCategory": "No category",
     "deleteConfirm": "Delete this block?",
     "days": {
@@ -99,6 +101,7 @@
     "editHabit": "Edit habit",
     "habitName": "Habit name",
     "completion": "Completion",
+    "removeHabit": "Remove habit",
     "noHabits": "No habits yet. Add one to get started.",
     "weekCompletion": "{percent}% this week",
     "deleteConfirm": "Delete this habit?",
@@ -149,6 +152,7 @@
     "addTodo": "Add to-do",
     "notesPlaceholder": "Write your notes for today...",
     "noTodos": "Nothing here yet.",
+    "priorityLabel": "Priority: {priority}",
     "priority": {
       "low": "Low",
       "medium": "Medium",
@@ -158,6 +162,7 @@
   "weeklyTasks": {
     "title": "Weekly tasks",
     "addTask": "Add task",
+    "removeTask": "Remove task",
     "noTasks": "No weekly tasks."
   },
   "settings": {

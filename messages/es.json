@@ -71,10 +71,12 @@
     "editBlock": "Editar bloque",
     "category": "Categoría",
     "blockTitle": "Título",
+    "blockTitlePlaceholder": "p. ej. Clase, Práctica...",
     "startTime": "Hora de inicio",
     "endTime": "Hora de fin",
     "recurring": "Se repite cada semana",
     "syncToCalendar": "Sincronizar con Google Calendar",
+    "calendarNotConnectedTooltip": "Conecta Google Calendar en Configuración primero",
     "noCategory": "Sin categoría",
     "deleteConfirm": "¿Eliminar este bloque?",
     "days": {
@@ -99,6 +101,7 @@
     "editHabit": "Editar hábito",
     "habitName": "Nombre del hábito",
     "completion": "Completado",
+    "removeHabit": "Eliminar hábito",
     "noHabits": "Sin hábitos todavía. Agrega uno para empezar.",
     "weekCompletion": "{percent}% esta semana",
     "deleteConfirm": "¿Eliminar este hábito?",
@@ -149,6 +152,7 @@
     "addTodo": "Agregar pendiente",
     "notesPlaceholder": "Escribe tus notas de hoy...",
     "noTodos": "Nada por aquí todavía.",
+    "priorityLabel": "Prioridad: {priority}",
     "priority": {
       "low": "Baja",
       "medium": "Media",
@@ -158,6 +162,7 @@
   "weeklyTasks": {
     "title": "Tareas semanales",
     "addTask": "Agregar tarea",
+    "removeTask": "Eliminar tarea",
     "noTasks": "Sin tareas semanales."
   },
   "settings": {

@@ -17,6 +17,7 @@ const PRIORITY_COLOR: Record<Priority, string> = {
 const PRIORITY_OPTIONS: Priority[] = ['high', 'medium', 'low']
 
 function PriorityDot({ priority, onChange }: { priority: Priority; onChange: (p: Priority) => void }) {
+  const td = useTranslations('daily')
   const [open, setOpen] = useState(false)
 
   return (
@@ -25,7 +26,7 @@ function PriorityDot({ priority, onChange }: { priority: Priority; onChange: (p:
         onClick={() => setOpen(v => !v)}
         className="w-2.5 h-2.5 rounded-full shrink-0 mt-0.5"
         style={{ background: PRIORITY_COLOR[priority] }}
-        title={`Priority: ${priority}`}
+        title={td('priorityLabel', { priority })}
       />
       {open && (
         <>

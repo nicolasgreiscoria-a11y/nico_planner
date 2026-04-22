@@ -163,7 +163,7 @@ export function SlotEditor({
               type="text"
               value={title}
               onChange={e => setTitle(e.target.value)}
-              placeholder="e.g. Lecture, Practice..."
+              placeholder={t('blockTitlePlaceholder')}
               style={inputStyle}
               onKeyDown={e => { if (e.key === 'Enter') handleSave() }}
             />
@@ -241,7 +241,7 @@ export function SlotEditor({
                   cursor: calendarConnected ? 'pointer' : 'not-allowed',
                   border: `1px solid ${isSynced ? '#57bb8A44' : calendarConnected ? '#57bb8A33' : '#333333'}`,
                 }}
-                title={calendarConnected ? undefined : 'Connect Google Calendar in Settings first'}
+                title={calendarConnected ? undefined : t('calendarNotConnectedTooltip')}
               >
                 {syncing ? tc('saving') : tc('save')}
               </button>

@@ -18,6 +18,7 @@ function WeeklyTaskItem({
   onToggle: () => void
   onRemove: () => void
 }) {
+  const twt = useTranslations('weeklyTasks')
   return (
     <li className="flex items-center gap-3 py-2 px-3 rounded-xl group transition-colors" style={{ transition: 'background 150ms ease' }} onMouseEnter={e => (e.currentTarget as HTMLElement).style.background = 'var(--glass-surface)'} onMouseLeave={e => (e.currentTarget as HTMLElement).style.background = 'transparent'}>
       <button
@@ -56,7 +57,7 @@ function WeeklyTaskItem({
         onClick={onRemove}
         className="opacity-0 group-hover:opacity-100 transition-opacity p-1 rounded hover:bg-[#2A2A2A]"
         style={{ color: '#555555' }}
-        title="Remove from template"
+        title={twt('removeTask')}
       >
         <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
           <path d="M2 2l8 8M10 2L2 10" />
