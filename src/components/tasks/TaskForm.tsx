@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import { useTranslations } from 'next-intl'
 import { Task, TaskDraft, TaskPriority, TaskStatus, TaskType } from '@/lib/hooks/useTasks'
 
 interface TaskFormProps {
@@ -41,13 +42,10 @@ const TASK_TYPES: TaskType[] = ['event', 'project', 'deadline', 'other']
 const PRIORITIES: TaskPriority[] = ['high', 'medium', 'low']
 const STATUSES: TaskStatus[] = ['pending', 'in_progress', 'completed']
 
-const STATUS_LABEL: Record<TaskStatus, string> = {
-  pending: 'Pending',
-  in_progress: 'In Progress',
-  completed: 'Completed',
-}
-
 export function TaskForm({ initial, onSave, onClose }: TaskFormProps) {
+  const t = useTranslations('tasks')
+  const tc = useTranslations('common')
+
   const [title, setTitle] = useState(initial?.title ?? '')
   const [description, setDescription] = useState(initial?.description ?? '')
   const [taskType, setTaskType] = useState<TaskType>(initial?.task_type ?? 'event')
@@ -56,6 +54,13 @@ export function TaskForm({ initial, onSave, onClose }: TaskFormProps) {
   const [startDate, setStartDate] = useState(initial?.start_date ?? '')
   const [endDate, setEndDate] = useState(initial?.end_date ?? '')
   const [onCalendar, setOnCalendar] = useState(initial?.on_calendar ?? false)
+
+  // Map internal status keys to message keys
+  const statusLabel: Record<TaskStatus, string> = {
+    pending: t('statuses.todo'),
+    in_progress: t('statuses.in_progress'),
+    completed: t('statuses.done'),
+  }
 
   const titleRef = useRef<HTMLInputElement>(null)
   useEffect(() => { titleRef.current?.focus() }, [])
@@ -92,7 +97,7 @@ export function TaskForm({ initial, onSave, onClose }: TaskFormProps) {
           {/* Header */}
           <div className="flex items-center justify-between">
             <span className="text-base font-semibold" style={{ color: '#E8E8E8', fontFamily: 'DM Sans, sans-serif' }}>
-              {initial ? 'Edit task' : 'New task'}
+              {initial ? t('editTask') : t('addTask')}
             </span>
             <button onClick={onClose} className="p-1 rounded hover:bg-[#2A2A2A]" style={{ color: '#888888' }}>
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
@@ -102,20 +107,20 @@ export function TaskForm({ initial, onSave, onClose }: TaskFormProps) {
           </div>
 
           {/* Title */}
-          <Field label="Title">
+          <Field label={t('taskTitle')}>
             <input
               ref={titleRef}
               type="text"
               value={title}
               onChange={e => setTitle(e.target.value)}
-              placeholder="Task title"
+              placeholder={t('taskTitle')}
               style={inputStyle}
               onKeyDown={e => { if (e.key === 'Enter') handleSave() }}
             />
           </Field>
 
           {/* Description */}
-          <Field label="Description">
+          <Field label={t('description')}>
             <textarea
               value={description}
               onChange={e => setDescription(e.target.value)}
@@ -127,17 +132,17 @@ export function TaskForm({ initial, onSave, onClose }: TaskFormProps) {
 
           {/* Type + Priority row */}
           <div className="grid grid-cols-2 gap-3">
-            <Field label="Type">
+            <Field label={t('type')}>
               <select value={taskType} onChange={e => setTaskType(e.target.value as TaskType)} style={inputStyle}>
-                {TASK_TYPES.map(t => (
-                  <option key={t} value={t}>{t.charAt(0).toUpperCase() + t.slice(1)}</option>
+                {TASK_TYPES.map(type => (
+                  <option key={type} value={type}>{t(`types.${type}`)}</option>
                 ))}
               </select>
             </Field>
-            <Field label="Priority">
+            <Field label={t('priority')}>
               <select value={priority} onChange={e => setPriority(e.target.value as TaskPriority)} style={inputStyle}>
                 {PRIORITIES.map(p => (
-                  <option key={p} value={p}>{p.charAt(0).toUpperCase() + p.slice(1)}</option>
+                  <option key={p} value={p}>{t(`priorities.${p}`)}</option>
                 ))}
               </select>
             </Field>
@@ -145,10 +150,10 @@ export function TaskForm({ initial, onSave, onClose }: TaskFormProps) {
 
           {/* Status + On Calendar row */}
           <div className="grid grid-cols-2 gap-3">
-            <Field label="Status">
+            <Field label={t('status')}>
               <select value={status} onChange={e => setStatus(e.target.value as TaskStatus)} style={inputStyle}>
                 {STATUSES.map(s => (
-                  <option key={s} value={s}>{STATUS_LABEL[s]}</option>
+                  <option key={s} value={s}>{statusLabel[s]}</option>
                 ))}
               </select>
             </Field>
@@ -160,17 +165,17 @@ export function TaskForm({ initial, onSave, onClose }: TaskFormProps) {
                   onChange={e => setOnCalendar(e.target.checked)}
                   className="w-4 h-4 accent-[#57bb8A]"
                 />
-                <span className="text-sm" style={{ color: '#888888' }}>Add to Calendar</span>
+                <span className="text-sm" style={{ color: '#888888' }}>{t('syncToCalendar')}</span>
               </label>
             </div>
           </div>
 
           {/* Date range */}
           <div className="grid grid-cols-2 gap-3">
-            <Field label="Start date">
+            <Field label={t('startDate')}>
               <input type="date" value={startDate} onChange={e => setStartDate(e.target.value)} style={inputStyle} />
             </Field>
-            <Field label="End date">
+            <Field label={t('endDate')}>
               <input type="date" value={endDate} onChange={e => setEndDate(e.target.value)} style={inputStyle} />
             </Field>
           </div>
@@ -182,7 +187,7 @@ export function TaskForm({ initial, onSave, onClose }: TaskFormProps) {
               className="text-sm px-4 py-2 rounded-lg transition-colors hover:bg-[#2A2A2A]"
               style={{ color: '#888888' }}
             >
-              Cancel
+              {tc('cancel')}
             </button>
             <button
               onClick={handleSave}
@@ -190,7 +195,7 @@ export function TaskForm({ initial, onSave, onClose }: TaskFormProps) {
               className="text-sm px-5 py-2 rounded-lg font-medium disabled:opacity-50"
               style={{ background: '#57bb8A', color: '#0F0F0F' }}
             >
-              {initial ? 'Save' : 'Create'}
+              {initial ? tc('save') : t('addTask')}
             </button>
           </div>
         </div>
