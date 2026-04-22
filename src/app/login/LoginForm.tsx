@@ -2,9 +2,11 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import { useTranslations } from 'next-intl'
 import { createClient } from '@/lib/supabase/client'
 
 export default function LoginForm() {
+  const t = useTranslations('login')
   const router = useRouter()
   const supabase = createClient()
 
@@ -85,7 +87,7 @@ export default function LoginForm() {
             HabitCircuit
           </h1>
           <p className="text-sm" style={{ color: 'var(--muted)' }}>
-            Your weekly planner and habit tracker
+            {t('tagline')}
           </p>
         </div>
 
@@ -103,14 +105,14 @@ export default function LoginForm() {
           {signupDone ? (
             <div className="text-center">
               <p className="text-sm mb-4" style={{ color: 'var(--text)' }}>
-                Check your email to confirm your account, then sign in.
+                {t('confirmEmail')}
               </p>
               <button
                 onClick={() => { setMode('signin'); setSignupDone(false) }}
                 className="text-sm font-medium cursor-pointer transition-opacity hover:opacity-70"
                 style={{ color: '#57bb8A' }}
               >
-                Back to sign in
+                {t('backToSignIn')}
               </button>
             </div>
           ) : (
@@ -136,7 +138,7 @@ export default function LoginForm() {
                       boxShadow: mode === m ? '0 2px 8px rgba(87,187,138,0.25)' : 'none',
                     }}
                   >
-                    {m === 'signin' ? 'Sign in' : 'Sign up'}
+                    {m === 'signin' ? t('signIn') : t('signUp')}
                   </button>
                 ))}
               </div>
@@ -147,7 +149,7 @@ export default function LoginForm() {
                     className="block text-xs font-medium mb-1.5"
                     style={{ color: 'var(--muted)' }}
                   >
-                    Email
+                    {t('email')}
                   </label>
                   <input
                     type="email"
@@ -155,7 +157,7 @@ export default function LoginForm() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     className="glass-input w-full px-3 py-2.5 text-sm"
-                    placeholder="you@example.com"
+                    placeholder={t('emailPlaceholder')}
                     autoComplete="email"
                   />
                 </div>
@@ -165,7 +167,7 @@ export default function LoginForm() {
                     className="block text-xs font-medium mb-1.5"
                     style={{ color: 'var(--muted)' }}
                   >
-                    Password
+                    {t('password')}
                   </label>
                   <input
                     type="password"
@@ -173,7 +175,7 @@ export default function LoginForm() {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     className="glass-input w-full px-3 py-2.5 text-sm"
-                    placeholder={mode === 'signup' ? 'At least 6 characters' : '••••••••'}
+                    placeholder={mode === 'signup' ? t('passwordHint') : t('passwordPlaceholder')}
                     autoComplete={mode === 'signin' ? 'current-password' : 'new-password'}
                   />
                 </div>
@@ -194,7 +196,7 @@ export default function LoginForm() {
                     boxShadow: '0 4px 16px rgba(87,187,138,0.25)',
                   }}
                 >
-                  {loading ? 'Please wait...' : mode === 'signin' ? 'Sign in' : 'Create account'}
+                  {loading ? t('loading') : mode === 'signin' ? t('signIn') : t('createAccount')}
                 </button>
               </form>
             </>

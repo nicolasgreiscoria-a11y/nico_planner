@@ -3,11 +3,13 @@
 import { useCallback } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
+import { useTranslations } from 'next-intl'
 import { WeekNavigator } from './WeekNavigator'
 
 export function TopBar({ displayName }: { displayName: string }) {
   const router = useRouter()
   const supabase = createClient()
+  const t = useTranslations('topBar')
 
   const handleLogout = useCallback(async () => {
     await supabase.auth.signOut()
@@ -32,7 +34,7 @@ export function TopBar({ displayName }: { displayName: string }) {
           className="text-sm font-medium"
           style={{ color: 'var(--text)', fontFamily: 'IBM Plex Sans, sans-serif' }}
         >
-          Hey, {displayName}
+          {t('greeting', { name: displayName })}
         </span>
       </div>
 
@@ -61,7 +63,7 @@ export function TopBar({ displayName }: { displayName: string }) {
           ;(e.currentTarget as HTMLElement).style.borderColor = 'transparent'
         }}
       >
-        Sign out
+        {t('signOut')}
       </button>
     </header>
   )

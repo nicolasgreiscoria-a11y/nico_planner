@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { addDays, format } from 'date-fns'
+import { useTranslations } from 'next-intl'
 import { useWeek } from '@/lib/context/WeekContext'
 import { useSchedule, ScheduleEntry } from '@/lib/hooks/useSchedule'
 import { useCategories, Category } from '@/lib/hooks/useCategories'
@@ -46,7 +47,7 @@ function slotToTime(slotIndex: number, dayStart: string): string {
   return `${h}:${min}`
 }
 
-const DAY_NAMES = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+const DAY_KEYS = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'] as const
 
 // ─── Entry block ─────────────────────────────────────────────────────────────
 
@@ -106,6 +107,7 @@ function EntryBlock({
 
 function DayColumn({
   dayIndex,
+  dayName,
   date,
   slots,
   entries,
@@ -115,6 +117,7 @@ function DayColumn({
   onEntryClick,
 }: {
   dayIndex: number
+  dayName: string
   date: Date
   slots: string[]
   entries: ScheduleEntry[]
@@ -144,7 +147,7 @@ function DayColumn({
           className="text-xs font-medium uppercase tracking-wide"
           style={{ color: '#888888' }}
         >
-          {DAY_NAMES[dayIndex]}
+          {dayName}
         </div>
         <div
           className="text-sm font-semibold mt-0.5"
@@ -216,11 +219,15 @@ type EditorState = CreateState | EditState | null
 // ─── Main WeekGrid ────────────────────────────────────────────────────────────
 
 export function WeekGrid() {
+  const t = useTranslations('schedule')
+  const tc = useTranslations('common')
   const { weekStart } = useWeek()
   const { entries, loading, add, update, remove, syncToCalendar } = useSchedule(weekStart)
   const { categories } = useCategories()
   const { profile } = useProfile()
   const [editorState, setEditorState] = useState<EditorState>(null)
+
+  const DAY_NAMES = DAY_KEYS.map(k => t(`days.${k}`))
 
   const DAY_START = profile?.day_start_time ?? '05:00'
   const slots = generateSlots(DAY_START)
@@ -318,6 +325,7 @@ export function WeekGrid() {
             <DayColumn
               key={i}
               dayIndex={i}
+              dayName={DAY_NAMES[i]}
               date={addDays(weekStart, i)}
               slots={slots}
               entries={entries}
@@ -335,7 +343,7 @@ export function WeekGrid() {
           className="absolute inset-0 flex items-center justify-center pointer-events-none"
           style={{ background: '#0F0F0F88' }}
         >
-          <span className="text-sm" style={{ color: '#888888' }}>Loading...</span>
+          <span className="text-sm" style={{ color: '#888888' }}>{tc('loading')}</span>
         </div>
       )}
 

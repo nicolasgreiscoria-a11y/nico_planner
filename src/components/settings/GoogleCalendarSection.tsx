@@ -2,8 +2,10 @@
 
 import { useCallback, useEffect, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
+import { useTranslations } from 'next-intl'
 
 export function GoogleCalendarSection() {
+  const t = useTranslations('settings')
   const searchParams = useSearchParams()
   const [connected, setConnected] = useState<boolean | null>(null)
   const [loading, setLoading] = useState(true)
@@ -45,10 +47,10 @@ export function GoogleCalendarSection() {
           />
           <span className="text-sm" style={{ color: '#E8E8E8' }}>
             {loading
-              ? 'Checking...'
+              ? '...'
               : connected
-              ? 'Connected to Google Calendar'
-              : 'Not connected'}
+              ? t('calendarConnected')
+              : t('calendarNotConnected')}
           </span>
         </div>
 
@@ -60,7 +62,7 @@ export function GoogleCalendarSection() {
               className="text-xs px-3 py-1.5 rounded-md transition-colors hover:bg-[#2A2A2A] disabled:opacity-50"
               style={{ color: '#E67C73', border: '1px solid #E67C7333' }}
             >
-              {disconnecting ? 'Disconnecting...' : 'Disconnect'}
+              {disconnecting ? '...' : t('disconnectCalendar')}
             </button>
           ) : (
             <a
@@ -68,7 +70,7 @@ export function GoogleCalendarSection() {
               className="text-xs px-4 py-1.5 rounded-md font-medium transition-opacity hover:opacity-90"
               style={{ background: '#57bb8A', color: '#0F0F0F' }}
             >
-              Connect Google Calendar
+              {t('connectCalendar')}
             </a>
           )
         )}
@@ -77,19 +79,19 @@ export function GoogleCalendarSection() {
       {/* Success / error banner from OAuth redirect */}
       {searchParams.get('google') === 'connected' && (
         <p className="text-xs px-3 py-2 rounded-lg" style={{ background: '#57bb8A18', color: '#57bb8A', border: '1px solid #57bb8A33' }}>
-          Google Calendar connected successfully.
+          {t('calendarConnectSuccess')}
         </p>
       )}
       {searchParams.get('google') === 'error' && (
         <p className="text-xs px-3 py-2 rounded-lg" style={{ background: '#E67C7318', color: '#E67C73', border: '1px solid #E67C7333' }}>
-          Connection failed. Make sure your Google credentials are configured and try again.
+          {t('calendarConnectError')}
         </p>
       )}
 
       {/* Info */}
       {!connected && !loading && (
         <p className="text-xs" style={{ color: '#555555' }}>
-          Connect your Google account to sync tasks with Google Calendar. Requires GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, and GOOGLE_REDIRECT_URI in your environment.
+          {t('calendarDescription')}
         </p>
       )}
     </div>

@@ -1,16 +1,17 @@
 'use client'
 
 import { useState } from 'react'
+import { useTranslations } from 'next-intl'
 import { Task, TaskPriority, TaskStatus, TaskType, useTasks } from '@/lib/hooks/useTasks'
 import { TaskForm } from './TaskForm'
 import { useToast } from '@/lib/context/ToastContext'
 
 // ─── Visual helpers ───────────────────────────────────────────────────────────
 
-const STATUS_STYLE: Record<TaskStatus, { label: string; color: string; bg: string }> = {
-  pending:     { label: 'Pending',     color: '#888888', bg: '#88888818' },
-  in_progress: { label: 'In Progress', color: '#F6BF26', bg: '#F6BF2618' },
-  completed:   { label: 'Completed',   color: '#57bb8A', bg: '#57bb8A18' },
+const STATUS_COLOR: Record<TaskStatus, { color: string; bg: string }> = {
+  pending:     { color: '#888888', bg: '#88888818' },
+  in_progress: { color: '#F6BF26', bg: '#F6BF2618' },
+  completed:   { color: '#57bb8A', bg: '#57bb8A18' },
 }
 
 const PRIORITY_COLOR: Record<TaskPriority, string> = {
@@ -19,15 +20,8 @@ const PRIORITY_COLOR: Record<TaskPriority, string> = {
   low:    '#57bb8A',
 }
 
-const TYPE_LABEL: Record<TaskType, string> = {
-  event:    'Event',
-  project:  'Project',
-  deadline: 'Deadline',
-  other:    'Other',
-}
-
-function StatusBadge({ status, onClick }: { status: TaskStatus; onClick: () => void }) {
-  const s = STATUS_STYLE[status]
+function StatusBadge({ status, label, onClick }: { status: TaskStatus; label: string; onClick: () => void }) {
+  const s = STATUS_COLOR[status]
   return (
     <button
       onClick={onClick}
@@ -35,7 +29,7 @@ function StatusBadge({ status, onClick }: { status: TaskStatus; onClick: () => v
       style={{ background: s.bg, color: s.color, border: `1px solid ${s.color}33` }}
       title="Click to advance status"
     >
-      {s.label}
+      {label}
     </button>
   )
 }
@@ -55,11 +49,15 @@ function CalendarIcon() {
 
 function TaskRow({
   task,
+  typeLabel,
+  statusLabel,
   onCycleStatus,
   onEdit,
   onDelete,
 }: {
   task: Task
+  typeLabel: string
+  statusLabel: string
   onCycleStatus: () => void
   onEdit: () => void
   onDelete: () => void
@@ -72,7 +70,7 @@ function TaskRow({
     >
       {/* Type */}
       <td className="px-4 py-2.5 text-xs whitespace-nowrap" style={{ color: '#888888' }}>
-        {TYPE_LABEL[task.task_type]}
+        {typeLabel}
       </td>
 
       {/* Title */}
@@ -111,7 +109,7 @@ function TaskRow({
 
       {/* Status */}
       <td className="px-4 py-2.5" onClick={e => { e.stopPropagation(); onCycleStatus() }}>
-        <StatusBadge status={task.status} onClick={onCycleStatus} />
+        <StatusBadge status={task.status} label={statusLabel} onClick={onCycleStatus} />
       </td>
 
       {/* Delete */}
@@ -134,13 +132,6 @@ function TaskRow({
 // ─── Filter tabs ──────────────────────────────────────────────────────────────
 
 type Filter = 'all' | TaskStatus
-
-const FILTERS: { key: Filter; label: string }[] = [
-  { key: 'all',        label: 'All' },
-  { key: 'pending',    label: 'Pending' },
-  { key: 'in_progress', label: 'In Progress' },
-  { key: 'completed',  label: 'Completed' },
-]
 
 // ─── Main table ───────────────────────────────────────────────────────────────
 
@@ -171,19 +162,40 @@ async function calendarDelete(taskId: string): Promise<string | null> {
 }
 
 export function TaskTable() {
+  const t = useTranslations('tasks')
   const { tasks, loading, add, update, cycleStatus, remove } = useTasks()
   const { addToast } = useToast()
   const [filter, setFilter] = useState<Filter>('all')
   const [editingTask, setEditingTask] = useState<Task | null>(null)
   const [creating, setCreating] = useState(false)
 
-  const filtered = filter === 'all' ? tasks : tasks.filter(t => t.status === filter)
+  const filtered = filter === 'all' ? tasks : tasks.filter(task => task.status === filter)
 
   const counts: Record<Filter, number> = {
     all: tasks.length,
-    pending: tasks.filter(t => t.status === 'pending').length,
-    in_progress: tasks.filter(t => t.status === 'in_progress').length,
-    completed: tasks.filter(t => t.status === 'completed').length,
+    pending: tasks.filter(task => task.status === 'pending').length,
+    in_progress: tasks.filter(task => task.status === 'in_progress').length,
+    completed: tasks.filter(task => task.status === 'completed').length,
+  }
+
+  const FILTERS: { key: Filter; label: string }[] = [
+    { key: 'all',         label: 'All' },
+    { key: 'pending',     label: t('statuses.todo') },
+    { key: 'in_progress', label: t('statuses.in_progress') },
+    { key: 'completed',   label: t('statuses.done') },
+  ]
+
+  const statusLabel: Record<TaskStatus, string> = {
+    pending:     t('statuses.todo'),
+    in_progress: t('statuses.in_progress'),
+    completed:   t('statuses.done'),
+  }
+
+  const typeLabel: Record<TaskType, string> = {
+    event:    t('types.event'),
+    project:  t('types.project'),
+    deadline: t('types.deadline'),
+    other:    t('types.other'),
   }
 
   return (
@@ -224,20 +236,20 @@ export function TaskTable() {
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
             <path d="M7 2v10M2 7h10" />
           </svg>
-          New task
+          {t('addTask')}
         </button>
       </div>
 
       {/* Table */}
       <div className="glass-card overflow-hidden" style={{ borderRadius: 16 }}>
         {loading ? (
-          <div className="p-6 text-center text-sm" style={{ color: '#888888' }}>Loading tasks...</div>
+          <div className="p-6 text-center text-sm" style={{ color: '#888888' }}>{t('noTasks')}</div>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full" style={{ minWidth: 640 }}>
               <thead>
                 <tr style={{ borderBottom: '1px solid #2A2A2A' }}>
-                  {['Type', 'Title', 'Priority', 'Start', 'Due', 'Status', ''].map((h, i) => (
+                  {[t('type'), t('taskTitle'), t('priority'), t('startDate'), t('endDate'), t('status'), ''].map((h, i) => (
                     <th
                       key={i}
                       className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wide"
@@ -252,7 +264,7 @@ export function TaskTable() {
                 {filtered.length === 0 ? (
                   <tr>
                     <td colSpan={7} className="px-4 py-8 text-center text-sm" style={{ color: '#555555' }}>
-                      {filter === 'all' ? 'No tasks yet. Create one above.' : `No ${filter.replace('_', ' ')} tasks.`}
+                      {t('noTasks')}
                     </td>
                   </tr>
                 ) : (
@@ -260,6 +272,8 @@ export function TaskTable() {
                     <TaskRow
                       key={task.id}
                       task={task}
+                      typeLabel={typeLabel[task.task_type]}
+                      statusLabel={statusLabel[task.status]}
                       onCycleStatus={() => cycleStatus(task.id)}
                       onEdit={() => setEditingTask(task)}
                       onDelete={async () => {

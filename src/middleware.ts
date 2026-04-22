@@ -32,6 +32,19 @@ export async function middleware(request: NextRequest) {
   // Refresh session — do not remove this
   await supabase.auth.getUser()
 
+  // Auto-detect locale from Accept-Language header if no cookie set
+  if (!request.cookies.get('NEXT_LOCALE')) {
+    const acceptLanguage = request.headers.get('accept-language') ?? ''
+    const preferred = acceptLanguage.split(',')[0]?.split('-')[0]?.toLowerCase()
+    if (preferred === 'es') {
+      supabaseResponse.cookies.set('NEXT_LOCALE', 'es', {
+        path: '/',
+        maxAge: 60 * 60 * 24 * 365,
+        sameSite: 'lax',
+      })
+    }
+  }
+
   return supabaseResponse
 }
 

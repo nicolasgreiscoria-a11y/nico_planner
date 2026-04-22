@@ -2,11 +2,11 @@
 
 import { useState } from 'react'
 import { format } from 'date-fns'
+import { useTranslations } from 'next-intl'
 import { useWeek } from '@/lib/context/WeekContext'
 import { useHabits } from '@/lib/hooks/useHabits'
 
-const DAY_LABELS = ['M', 'T', 'W', 'T', 'F', 'S', 'S']
-const DAY_FULL = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+const DAY_KEYS = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'] as const
 
 // ─── Checkbox circle ─────────────────────────────────────────────────────────
 
@@ -67,6 +67,8 @@ function CompletionBar({ pct }: { pct: number }) {
 // ─── Add habit form ───────────────────────────────────────────────────────────
 
 function AddHabitForm({ onAdd }: { onAdd: (name: string) => void }) {
+  const t = useTranslations('habits')
+  const tc = useTranslations('common')
   const [value, setValue] = useState('')
 
   function submit() {
@@ -83,7 +85,7 @@ function AddHabitForm({ onAdd }: { onAdd: (name: string) => void }) {
         value={value}
         onChange={e => setValue(e.target.value)}
         onKeyDown={e => { if (e.key === 'Enter') submit() }}
-        placeholder="Add a new habit..."
+        placeholder={t('habitName')}
         className="flex-1 bg-transparent text-sm outline-none placeholder-[#444444]"
         style={{ color: '#E8E8E8' }}
       />
@@ -93,7 +95,7 @@ function AddHabitForm({ onAdd }: { onAdd: (name: string) => void }) {
         className="text-xs px-3 py-1.5 rounded-md font-medium transition-opacity disabled:opacity-40"
         style={{ background: '#57bb8A', color: '#0F0F0F' }}
       >
-        Add
+        {tc('add')}
       </button>
     </div>
   )
@@ -102,15 +104,18 @@ function AddHabitForm({ onAdd }: { onAdd: (name: string) => void }) {
 // ─── Main table ───────────────────────────────────────────────────────────────
 
 export function HabitTable() {
+  const t = useTranslations('habits')
+  const tc = useTranslations('common')
   const { weekStart } = useWeek()
   const { habits, loading, weekDates, toggle, addHabit, removeHabit, isCompleted, weekCompletion } = useHabits(weekStart)
 
   const today = format(new Date(), 'yyyy-MM-dd')
+  const DAY_LABELS = DAY_KEYS.map(k => t(`days.${k}`))
 
   if (loading) {
     return (
       <div className="glass-card p-6">
-        <p className="text-sm" style={{ color: 'var(--muted)' }}>Loading habits...</p>
+        <p className="text-sm" style={{ color: 'var(--muted)' }}>{tc('loading')}</p>
       </div>
     )
   }
@@ -125,7 +130,7 @@ export function HabitTable() {
                 className="text-left px-4 py-3 text-xs font-medium uppercase tracking-wide"
                 style={{ color: '#888888', width: '40%' }}
               >
-                Habit
+                {t('habitName')}
               </th>
               {weekDates.map((date, i) => (
                 <th
@@ -149,7 +154,7 @@ export function HabitTable() {
                 className="text-right px-4 py-3 text-xs font-medium uppercase tracking-wide"
                 style={{ color: '#888888' }}
               >
-                Week
+                {t('completion')}
               </th>
             </tr>
           </thead>
@@ -161,7 +166,7 @@ export function HabitTable() {
                   className="text-center py-8 text-sm"
                   style={{ color: '#555555' }}
                 >
-                  No habits yet. Add one below.
+                  {t('noHabits')}
                 </td>
               </tr>
             )}
@@ -185,7 +190,7 @@ export function HabitTable() {
                       onClick={() => removeHabit(habit.id)}
                       className="opacity-0 group-hover:opacity-100 transition-opacity p-0.5 rounded"
                       style={{ color: '#555555' }}
-                      title="Remove habit"
+                      title={t('removeHabit')}
                     >
                       <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
                         <path d="M2 2l8 8M10 2L2 10" />

@@ -3,60 +3,7 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useState } from 'react'
-
-const NAV_ITEMS = [
-  {
-    href: '/dashboard',
-    label: 'Overview',
-    icon: (
-      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <rect x="2" y="2" width="6" height="6" rx="1" />
-        <rect x="10" y="2" width="6" height="6" rx="1" />
-        <rect x="2" y="10" width="6" height="6" rx="1" />
-        <rect x="10" y="10" width="6" height="6" rx="1" />
-      </svg>
-    ),
-  },
-  {
-    href: '/dashboard/schedule',
-    label: 'Schedule',
-    icon: (
-      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <rect x="2" y="3" width="14" height="13" rx="2" />
-        <path d="M6 2v2M12 2v2M2 7h14" />
-      </svg>
-    ),
-  },
-  {
-    href: '/dashboard/habits',
-    label: 'Habits',
-    icon: (
-      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M9 2a7 7 0 100 14A7 7 0 009 2z" />
-        <path d="M6 9l2 2 4-4" />
-      </svg>
-    ),
-  },
-  {
-    href: '/dashboard/tasks',
-    label: 'Tasks',
-    icon: (
-      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M3 5h12M3 9h8M3 13h6" />
-      </svg>
-    ),
-  },
-  {
-    href: '/dashboard/settings',
-    label: 'Settings',
-    icon: (
-      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <circle cx="9" cy="9" r="2.5" />
-        <path d="M9 2v1.5M9 14.5V16M2 9h1.5M14.5 9H16M4.1 4.1l1.1 1.1M12.8 12.8l1.1 1.1M4.1 13.9l1.1-1.1M12.8 5.2l1.1-1.1" />
-      </svg>
-    ),
-  },
-]
+import { useTranslations } from 'next-intl'
 
 function NavItem({ href, label, icon }: { href: string; label: string; icon: React.ReactNode }) {
   const pathname = usePathname()
@@ -93,6 +40,61 @@ function NavItem({ href, label, icon }: { href: string; label: string; icon: Rea
 
 export function Sidebar() {
   const [mobileOpen, setMobileOpen] = useState(false)
+  const t = useTranslations('nav')
+
+  const NAV_ITEMS = [
+    {
+      href: '/dashboard',
+      label: t('overview'),
+      icon: (
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+          <rect x="2" y="2" width="6" height="6" rx="1" />
+          <rect x="10" y="2" width="6" height="6" rx="1" />
+          <rect x="2" y="10" width="6" height="6" rx="1" />
+          <rect x="10" y="10" width="6" height="6" rx="1" />
+        </svg>
+      ),
+    },
+    {
+      href: '/dashboard/schedule',
+      label: t('schedule'),
+      icon: (
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+          <rect x="2" y="3" width="14" height="13" rx="2" />
+          <path d="M6 2v2M12 2v2M2 7h14" />
+        </svg>
+      ),
+    },
+    {
+      href: '/dashboard/habits',
+      label: t('habits'),
+      icon: (
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M9 2a7 7 0 100 14A7 7 0 009 2z" />
+          <path d="M6 9l2 2 4-4" />
+        </svg>
+      ),
+    },
+    {
+      href: '/dashboard/tasks',
+      label: t('tasks'),
+      icon: (
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M3 5h12M3 9h8M3 13h6" />
+        </svg>
+      ),
+    },
+    {
+      href: '/dashboard/settings',
+      label: t('settings'),
+      icon: (
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+          <circle cx="9" cy="9" r="2.5" />
+          <path d="M9 2v1.5M9 14.5V16M2 9h1.5M14.5 9H16M4.1 4.1l1.1 1.1M12.8 12.8l1.1 1.1M4.1 13.9l1.1-1.1M12.8 5.2l1.1-1.1" />
+        </svg>
+      ),
+    },
+  ]
 
   return (
     <>
@@ -107,7 +109,7 @@ export function Sidebar() {
           WebkitBackdropFilter: 'blur(12px)',
         }}
         onClick={() => setMobileOpen(prev => !prev)}
-        aria-label="Toggle menu"
+        aria-label={t('toggleMenu')}
       >
         {mobileOpen ? (
           <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">

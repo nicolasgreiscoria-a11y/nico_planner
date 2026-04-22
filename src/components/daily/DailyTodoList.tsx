@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { useTranslations } from 'next-intl'
 import { DailyTodo, Priority, useDailyTodos } from '@/lib/hooks/useDailyTodos'
 import { CategoryBadge } from '@/components/settings/CategoryBadge'
 import { useCategories } from '@/lib/hooks/useCategories'
@@ -16,6 +17,7 @@ const PRIORITY_COLOR: Record<Priority, string> = {
 const PRIORITY_OPTIONS: Priority[] = ['high', 'medium', 'low']
 
 function PriorityDot({ priority, onChange }: { priority: Priority; onChange: (p: Priority) => void }) {
+  const td = useTranslations('daily')
   const [open, setOpen] = useState(false)
 
   return (
@@ -24,7 +26,7 @@ function PriorityDot({ priority, onChange }: { priority: Priority; onChange: (p:
         onClick={() => setOpen(v => !v)}
         className="w-2.5 h-2.5 rounded-full shrink-0 mt-0.5"
         style={{ background: PRIORITY_COLOR[priority] }}
-        title={`Priority: ${priority}`}
+        title={td('priorityLabel', { priority })}
       />
       {open && (
         <>
@@ -124,12 +126,14 @@ function DailyTodoItem({
 // ─── Add todo input ───────────────────────────────────────────────────────────
 
 function AddTodoInput({ onAdd }: { onAdd: (title: string) => void }) {
+  const td = useTranslations('daily')
+  const tc = useTranslations('common')
   const [value, setValue] = useState('')
 
   function submit() {
-    const t = value.trim()
-    if (!t) return
-    onAdd(t)
+    const trimmed = value.trim()
+    if (!trimmed) return
+    onAdd(trimmed)
     setValue('')
   }
 
@@ -140,7 +144,7 @@ function AddTodoInput({ onAdd }: { onAdd: (title: string) => void }) {
         value={value}
         onChange={e => setValue(e.target.value)}
         onKeyDown={e => { if (e.key === 'Enter') submit() }}
-        placeholder="Add task..."
+        placeholder={td('addTodo')}
         className="flex-1 bg-transparent text-xs outline-none placeholder-[#333333]"
         style={{ color: '#E8E8E8' }}
       />
@@ -150,7 +154,7 @@ function AddTodoInput({ onAdd }: { onAdd: (title: string) => void }) {
         className="text-[10px] px-2 py-0.5 rounded font-medium disabled:opacity-40"
         style={{ background: '#57bb8A22', color: '#57bb8A', border: '1px solid #57bb8A33' }}
       >
-        Add
+        {tc('add')}
       </button>
     </div>
   )
@@ -165,6 +169,7 @@ export function DailyTodoList({
   date: string
   todosHook: ReturnType<typeof useDailyTodos>
 }) {
+  const td = useTranslations('daily')
   const { categories } = useCategories()
   const todos = todosHook.forDate(date)
 
@@ -174,10 +179,10 @@ export function DailyTodoList({
         className="text-xs font-medium uppercase tracking-wide"
         style={{ color: '#555555' }}
       >
-        To-do
+        {td('todos')}
       </label>
       {todos.length === 0 && (
-        <p className="text-xs" style={{ color: '#333333' }}>Nothing yet.</p>
+        <p className="text-xs" style={{ color: '#333333' }}>{td('noTodos')}</p>
       )}
       <ul className="space-y-0.5">
         {todos.map(todo => (

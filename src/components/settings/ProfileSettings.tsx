@@ -2,6 +2,10 @@
 
 import { useEffect, useState } from 'react'
 import { useProfile } from '@/lib/hooks/useProfile'
+import { useTranslations } from 'next-intl'
+import { setLocale } from '@/lib/actions/locale'
+import { useRouter } from 'next/navigation'
+import type { Locale } from '@/i18n/request'
 
 const TIMEZONES = [
   'America/Argentina/Buenos_Aires',
@@ -18,10 +22,6 @@ const TIMEZONES = [
   'UTC',
 ]
 
-const WEEK_DAYS = [
-  { value: 0, label: 'Sunday' },
-  { value: 1, label: 'Monday' },
-]
 
 const START_TIMES = [
   '04:00', '05:00', '06:00', '07:00', '08:00',
@@ -52,6 +52,13 @@ const inputStyle = {
 
 export function ProfileSettings() {
   const { profile, loading, saving, save } = useProfile()
+  const t = useTranslations('settings')
+  const router = useRouter()
+
+  async function handleLocaleChange(locale: Locale) {
+    await setLocale(locale)
+    router.refresh()
+  }
 
   const [displayName, setDisplayName] = useState('')
   const [timezone, setTimezone] = useState('America/Argentina/Buenos_Aires')
@@ -76,22 +83,22 @@ export function ProfileSettings() {
   }
 
   if (loading) {
-    return <p className="text-sm" style={{ color: '#888888' }}>Loading profile...</p>
+    return <p className="text-sm" style={{ color: '#888888' }}>{t('profile')}...</p>
   }
 
   return (
     <div className="space-y-5">
-      <Field label="Display name">
+      <Field label={t('displayName')}>
         <input
           type="text"
           value={displayName}
           onChange={e => setDisplayName(e.target.value)}
-          placeholder="Your name"
+          placeholder={t('displayName')}
           style={inputStyle}
         />
       </Field>
 
-      <Field label="Timezone">
+      <Field label={t('timezone')}>
         <select
           value={timezone}
           onChange={e => setTimezone(e.target.value)}
@@ -103,26 +110,25 @@ export function ProfileSettings() {
         </select>
       </Field>
 
-      <Field label="Week starts on">
+      <Field label={t('weekStartDay')}>
         <select
           value={weekStartDay}
           onChange={e => setWeekStartDay(Number(e.target.value))}
           style={inputStyle}
         >
-          {WEEK_DAYS.map(d => (
-            <option key={d.value} value={d.value}>{d.label}</option>
-          ))}
+          <option value={0}>{t('days.sunday')}</option>
+          <option value={1}>{t('days.monday')}</option>
         </select>
       </Field>
 
-      <Field label="Day starts at">
+      <Field label={t('dayStartTime')}>
         <select
           value={dayStartTime}
           onChange={e => setDayStartTime(e.target.value)}
           style={inputStyle}
         >
-          {START_TIMES.map(t => (
-            <option key={t} value={t}>{t}</option>
+          {START_TIMES.map(time => (
+            <option key={time} value={time}>{time}</option>
           ))}
         </select>
       </Field>
@@ -133,8 +139,28 @@ export function ProfileSettings() {
         className="px-5 py-2 rounded-lg text-sm font-medium transition-opacity disabled:opacity-60"
         style={{ background: '#57bb8A', color: '#0F0F0F' }}
       >
-        {saving ? 'Saving...' : 'Save changes'}
+        {saving ? t('saved') : t('saveChanges')}
       </button>
+
+      <div className="mt-8 border-t border-[#2A2A2A] pt-6">
+        <h3 className="text-sm font-medium text-[#888888] uppercase tracking-wider mb-4">
+          {t('language')}
+        </h3>
+        <div className="flex gap-2">
+          <button
+            onClick={() => handleLocaleChange('en')}
+            className="px-4 py-2 rounded-md text-sm font-medium transition-colors bg-[#1A1A1A] border border-[#2A2A2A] hover:border-[#57bb8A] text-[#E8E8E8]"
+          >
+            {t('languages.en')}
+          </button>
+          <button
+            onClick={() => handleLocaleChange('es')}
+            className="px-4 py-2 rounded-md text-sm font-medium transition-colors bg-[#1A1A1A] border border-[#2A2A2A] hover:border-[#57bb8A] text-[#E8E8E8]"
+          >
+            {t('languages.es')}
+          </button>
+        </div>
+      </div>
     </div>
   )
 }
