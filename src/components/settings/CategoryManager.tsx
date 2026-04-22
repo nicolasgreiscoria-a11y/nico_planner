@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { useTranslations } from 'next-intl'
 import { useCategories } from '@/lib/hooks/useCategories'
 import { CategoryBadge } from './CategoryBadge'
 
@@ -17,6 +18,8 @@ function CategoryRow({
   onUpdate: (id: string, changes: { name?: string; color?: string }) => void
   onRemove: (id: string) => void
 }) {
+  const t = useTranslations('settings')
+  const tc = useTranslations('common')
   const [editing, setEditing] = useState(false)
   const [draftName, setDraftName] = useState(name)
   const [draftColor, setDraftColor] = useState(color)
@@ -51,14 +54,14 @@ function CategoryRow({
           className="text-xs px-2.5 py-1 rounded-md font-medium transition-colors"
           style={{ background: '#57bb8A22', color: '#57bb8A', border: '1px solid #57bb8A44' }}
         >
-          Save
+          {tc('save')}
         </button>
         <button
           onClick={() => setEditing(false)}
           className="text-xs px-2.5 py-1 rounded-md transition-colors hover:bg-[#2A2A2A]"
           style={{ color: '#888888' }}
         >
-          Cancel
+          {tc('cancel')}
         </button>
       </li>
     )
@@ -74,7 +77,7 @@ function CategoryRow({
           onClick={() => { setDraftName(name); setDraftColor(color); setEditing(true) }}
           className="p-1.5 rounded-md hover:bg-[#2A2A2A] transition-colors"
           style={{ color: '#888888' }}
-          title="Edit"
+          title={tc('edit')}
         >
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
             <path d="M10 2l2 2-7 7H3v-2l7-7z" />
@@ -84,7 +87,7 @@ function CategoryRow({
           onClick={() => onRemove(id)}
           className="p-1.5 rounded-md hover:bg-[#2A2A2A] transition-colors"
           style={{ color: '#888888' }}
-          title="Delete"
+          title={t('deleteCategory')}
         >
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
             <path d="M2 4h10M5 4V2h4v2M5.5 7v4M8.5 7v4M3 4l.7 8h6.6L11 4" />
@@ -96,6 +99,8 @@ function CategoryRow({
 }
 
 export function CategoryManager() {
+  const t = useTranslations('settings')
+  const tc = useTranslations('common')
   const { categories, loading, add, update, remove } = useCategories()
   const [newName, setNewName] = useState('')
   const [newColor, setNewColor] = useState('#57bb8A')
@@ -144,7 +149,7 @@ export function CategoryManager() {
         />
         <input
           type="text"
-          placeholder="New category name..."
+          placeholder={t('categoryName')}
           value={newName}
           onChange={e => setNewName(e.target.value)}
           onKeyDown={e => { if (e.key === 'Enter') handleAdd() }}
@@ -157,7 +162,7 @@ export function CategoryManager() {
           className="text-xs px-3 py-1.5 rounded-md font-medium transition-colors disabled:opacity-40"
           style={{ background: '#57bb8A', color: '#0F0F0F' }}
         >
-          Add
+          {tc('add')}
         </button>
       </div>
     </div>
