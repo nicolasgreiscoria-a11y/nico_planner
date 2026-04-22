@@ -114,7 +114,7 @@ export function CategoryManager() {
   }
 
   if (loading) {
-    return <p className="text-sm" style={{ color: '#888888' }}>Loading categories...</p>
+    return <p className="text-sm" style={{ color: '#888888' }}>{tc('loading')}</p>
   }
 
   return (
@@ -130,7 +130,7 @@ export function CategoryManager() {
         ))}
         {categories.length === 0 && (
           <li className="text-sm py-4 text-center" style={{ color: '#888888' }}>
-            No categories yet.
+            {t('noCategories')}
           </li>
         )}
       </ul>

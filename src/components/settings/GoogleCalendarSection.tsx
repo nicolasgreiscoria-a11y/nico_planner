@@ -79,12 +79,12 @@ export function GoogleCalendarSection() {
       {/* Success / error banner from OAuth redirect */}
       {searchParams.get('google') === 'connected' && (
         <p className="text-xs px-3 py-2 rounded-lg" style={{ background: '#57bb8A18', color: '#57bb8A', border: '1px solid #57bb8A33' }}>
-          Google Calendar connected successfully.
+          {t('calendarConnectSuccess')}
         </p>
       )}
       {searchParams.get('google') === 'error' && (
         <p className="text-xs px-3 py-2 rounded-lg" style={{ background: '#E67C7318', color: '#E67C73', border: '1px solid #E67C7333' }}>
-          Connection failed. Make sure your Google credentials are configured and try again.
+          {t('calendarConnectError')}
         </p>
       )}
 

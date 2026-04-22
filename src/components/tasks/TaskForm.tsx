@@ -124,7 +124,7 @@ export function TaskForm({ initial, onSave, onClose }: TaskFormProps) {
             <textarea
               value={description}
               onChange={e => setDescription(e.target.value)}
-              placeholder="Optional details..."
+              placeholder={t('descriptionPlaceholder')}
               rows={2}
               style={{ ...inputStyle, resize: 'none' }}
             />
